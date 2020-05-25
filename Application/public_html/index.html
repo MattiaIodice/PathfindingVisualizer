@@ -1,0 +1,202 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <title>Pathfinding Visualizer</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="apple-touch-icon" href="apple-touch-icon.png">
+
+        <link rel="stylesheet" href="css/bootstrap.min.css">
+        <style>
+            body {
+                padding-top: 50px;
+                padding-bottom: 20px;
+            }
+        </style>
+        <link rel="stylesheet" href="css/bootstrap-theme.min.css">
+        <link rel="stylesheet" href="css/main.css">
+
+        <!--<script src="js/vendor/modernizr-2.8.3-respond-1.4.2.min.js"></script>-->
+    </head>
+    
+    
+    
+    
+    <body>
+        <nav class="navbar navbar-inverse navbar-fixed-top">
+            <div class="container-fluid">
+                <!-- Brand -->
+                <div class="navbar-header">
+                  <a class="navbar-brand" href="index.html">Pathfinding Visualizer</a>
+                </div>
+                
+                <!-- Contents -->
+                <ul class="nav navbar-nav">
+                    
+                    <!-- Maze Dropdown -->
+                    <li class="dropdown">
+                        <a class="dropdown-toggle"
+                            data-toggle="dropdown"
+                            href="#">
+                            Mazes
+                            <span class="caret"></span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <a onclick="generateMaze('Recursive')" href="#">
+                                    Recursive Division
+                                </a>
+                            </li>
+                            <!-- <li>
+                                <a onclick="generateMaze('RecHorizontal')" href="#">
+                                    Recursive Division (horizontal)
+                                </a>
+                            </li>
+                            <li>
+                                <a onclick="generateMaze('RecVertical')" href="#">
+                                    Recursive Division (vertical)
+                                </a>
+                            </li>
+                            <!-- <li>
+                                <a onclick="primInit()" href="#">
+                                    Randomized Prim's Algorithm
+                                </a>
+                            </li> -->
+                            <li>
+                                <a onclick="generateMaze('Random')" href="#">
+                                    Basic Random Maze
+                                </a>
+                            </li>
+                            <li>
+                                <a onclick="generateMaze('Hello')" href="#">
+                                    Hello! Maze
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    
+                    <!-- CellType Dropdown -->
+                    <li class="dropdown">
+                        <a class="dropdown-toggle"
+                            data-toggle="dropdown"
+                            href="#">
+                            Cell Types
+                            <span class="caret"></span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a onclick="setTypeCell('Wall')" href="#">Wall</a></li>
+                            <li><a onclick="setTypeCell('Mug')" href="#">Mug</a></li>
+                            <li><a onclick="setTypeCell('Water')" href="#">Water</a></li>
+                        </ul>
+                    </li>
+                    
+                    <!-- Algorithm Dropdown -->
+                    <li class="dropdown">
+                        <a class="dropdown-toggle"
+                            data-toggle="dropdown"
+                            href="#">
+                            Algorithms
+                            <span class="caret"></span>
+                        </a>
+                        <ul class="dropdown-menu"
+                            id="Algorithm">
+                            <li><a onclick="setAlgorithm('A*')" href="#">A*</a></li>
+                            <!--<li><a onclick="setAlgorithm('Bidirectional A*')" href="#">Bidirectional A*</a></li>-->
+                            <li><a onclick="setAlgorithm('Dijkstra')" href="#">Dijkstra</a></li>
+                            <li><a onclick="setAlgorithm('BFS')" href="#">Breadth-First Search</a></li>
+                            <li><a onclick="setAlgorithm('DFS')" href="#">Depth-First Search</a></li>
+                        </ul>
+                    </li>
+                    
+                    <li class="dropdown">
+                        <a class="dropdown-toggle"
+                            data-toggle="dropdown"
+                            href="#">
+                            Heuristics
+                            <span class="caret"></span>
+                        </a>
+                        <ul class="dropdown-menu"
+                            id="Heuristics">
+                            <li><a onclick="setHeuristic('Manhattan')" href="#">Manhattan (default)</a></li>
+                            <li><a onclick="setHeuristic('Euclidean')" href="#">Euclidean</a></li>
+                            <li><a onclick="setHeuristic('Chebychev')" href="#">Chebychev</a></li>
+                        </ul>
+                    </li>
+                    
+                    <!-- Speed Dropdown -->
+                    <li class="dropdown">
+                        <a class="dropdown-toggle"
+                            data-toggle="dropdown"
+                            href="#">
+                            Speed
+                            <span class="caret"></span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#">Fast</a></li>
+                            <li><a href="#">Medium</a></li>
+                            <li><a href="#">Slow</a></li>
+                        </ul>
+                    </li>
+                </ul>
+                
+                <div class="btn-group">
+                    <button onclick="startPathfinding()" class="btn btn-primary navbar-btn">Run!</button>
+                    <button onclick="resetAlgo()" class="btn btn-seconday navbar-btn">Clear Algorithm</button>
+                    <button onclick="resetAll()" class="btn btn-seconday navbar-btn">Clear Map</button>
+                </div>
+                
+                
+                <div class="dropdown navbar-btn">
+                    
+                    <ul class="dropdown-menu">
+                      <li><a href="#">HTML</a></li>
+                      <li><a href="#">CSS</a></li>
+                      <li><a href="#">JavaScript</a></li>
+                    </ul>
+                </div>
+                
+                
+            </div>
+        
+        </nav>
+        
+        <span>Choose a maze, or generate on your own, and solve it!</span> <br>
+        
+        <!-- JS/Bootstrap Import -->
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+        <script>window.jQuery || document.write('<script src="vendor/jquery-1.11.2.min.js"><\/script>')</script>
+        <script src="vendor/bootstrap.min.js"></script>
+        
+        <!-- Processing Import -->
+        <script src="p5/p5.js"></script>
+        <script src="p5/p5.sound.js"></script>
+        
+        <!-- My stuff -->
+        <script src="js/sketch.js"></script>
+        <!-- entities -->
+        <script src="js/entities/node.js"></script>
+        <!-- events -->
+        <script src="js/events/resetAlgo.js"></script>
+        <script src="js/events/resetAll.js"></script>
+        <script src="js/events/setAlgorithm.js"></script>
+        <script src="js/events/setMaze.js"></script>
+        <script src="js/events/setTypeCell.js"></script>
+        <script src="js/events/setVelocity.js"></script>
+        <script src="js/events/updateVelocity.js"></script>
+        <!-- mazes -->
+        <script src="js/mazes/helloMaze.js"></script>
+        <script src="js/mazes/randomMaze.js"></script>
+        <script src="js/mazes/recursiveDivision.js"></script>
+        <!-- pathfinding -->
+        <script src="js/pathfindings/aStar.js"></script>
+        <script src="js/pathfindings/prim.js"></script>
+        <!-- utils -->
+        <script src="js/utils/removeFromArray.js"></script>
+        <!-- visualizers -->
+        <script src="js/visualizers/visualizeMap.js"></script>
+        <script src="js/visualizers/visualizePath.js"></script>
+        
+    </body>
+</html>
