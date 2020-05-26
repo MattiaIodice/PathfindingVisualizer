@@ -32,6 +32,6 @@ function visualizeMap(){
         for(let i = 0; i < closedSet.length; i++)
             closedSet[i].show(color(255, 0, 0));
 
-    source.show(color(255, 0, 255));
+    source.show(color(0, 0, 255));
     target.show(color(255, 0, 255));
 }

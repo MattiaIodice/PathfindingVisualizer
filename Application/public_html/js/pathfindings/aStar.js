@@ -16,7 +16,7 @@ function aStarStep(){
     //updateVelocity();
     
     if(openSet.length > 0){
-        mapChanged = true;
+        
         let winner = 0;
         // TODO Inefficient (linear instead of log)
         for(let i = 0; i < openSet.length; i++){
@@ -28,10 +28,8 @@ function aStarStep(){
         removeFromArray(openSet, curr);
         
         if(curr === target){
-            // Algorithm finished with a success
-            algorithmInProcess = false;
-            algorithmFinished = true;
-            algorithmSuccess = true;
+            // SUCCESS
+            pathfindingStatus = status.SUCCESS;
         }else{
             let adjacents = curr.neighbors;
             for(let i = 0; i < adjacents.length; i++){
@@ -53,10 +51,8 @@ function aStarStep(){
         
         closedSet.push(curr);
     }else{
-        // Algorithm finished with a failure
-        algorithmInProcess = false;
-        algorithmFinished = true;
-        algorithmSuccess = false;
+        // FAILURE
+        pathfindingStatus = status.FAILURE;
     }
     
     return null;

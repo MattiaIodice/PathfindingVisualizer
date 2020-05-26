@@ -30,16 +30,26 @@ var currentMaze;
 var openSet = [];       // Q, this is a stack
 var closedSet = [];     // V \ Q, this is a stack
 var pred = new Map();   // Shortest path
-var algorithmInProcess; // Pathfindings flags
-var algorithmFinished;
-var algorithmSucess;
+
+// Pathfindings status
+const status = {
+    DEACTIVE: 'deactive',
+    ACTIVE: 'inprocess',
+    SUCCESS: 'success',
+    FAILURE: 'failure'
+};
+var pathfindingStatus;
 
 // Other
-var lastCellUpdated;
-var currentCellType = -1;
 var velocity = 0;
-var denseWallsProb = 0.8;
+
+// Map flag
 var mapChanged;
+var lastCellUpdated;
+var currentCellType;
+var movingStart;
+var movingEnd;
+var denseWallsProb;
 
 
 
@@ -62,19 +72,21 @@ function setup() {
     source = grid[startX][startY];
     target = grid[endX][endY];
     
-    // Init dynamic function pointers
-    currentHeuristicFunc = function(a,b){
+    
+    currentHeuristicFunc = function(a,b){ // Init dynamic function pointers
         return Math.abs(a.i-b.i) + Math.abs(a.j-b.j);
     };
     currentPathfinding = null;
     currentMaze = null;
-    // Init pathfindings flags
-    algorithmInProcess = false;
-    algorithmFinished = false;
-    algorithmSucess = false;
+    
+    pathfindingStatus = status.DEACTIVE; // Init pathfindings status
     currentPathfinding = null;
     
-    mapChanged = true;
+    mapChanged = true; // Init map flags
+    currentCellType = -1;
+    denseWallsProb = 0.8;
+    movingStart = false;
+    movingEnd = false;
 }
 
 
@@ -86,15 +98,16 @@ function setup() {
 
 function startPathfinding(){
     if(currentPathfinding !== null)
-        algorithmInProcess = true;
+        pathfindingStatus = status.ACTIVE;
     else
         console.log('Error!\nSelect a pathfinding algorithm!\n');
 }
 
 function updateLogic(){
     // Logic step
-    if(algorithmInProcess === true){
+    if(pathfindingStatus === status.ACTIVE){
         currentPathfinding();
+        mapChanged = true;
     }
 }
 
@@ -105,13 +118,18 @@ function updateMap(){
         
         visualizeMap();
         
-        if(algorithmFinished === true && algorithmSucess === true){
-            visualizePath(target);
+        if(pathfindingStatus === status.SUCCESS){
             console.log("The shortest path distance is " + target.g);
-            // Reset flags pathfindings
-            algorithmFinished = false;
-            algorithmSucess = false;
-            currentPathfinding = null;
+            
+            visualizePath(target);
+            
+            // Reset pathfindings status
+            pathfindingStatus = status.DEACTIVE;
+        }else if(pathfindingStatus === status.FAILURE){
+            console.log("There is not exist a path");
+            
+            // Reset pathfindings status
+            pathfindingStatus = status.DEACTIVE;
         }
         
         mapChanged = false;
@@ -124,46 +142,73 @@ function draw() {
 }
 
 function mousePressed() {
-    console.log("mouseX " + mouseX);
-    console.log("mouseY " + mouseY);
-    if(algorithmInProcess === false && algorithmFinished === false){
+    if(pathfindingStatus === status.DEACTIVE){
         /* global mouseX, mouseY */
         currX = int(mouseX / wCell);
         currY = int(mouseY / hCell);
-        // TODO Fix when outside of map
+        
         if( (currX !== startX || currY !== startY) &&
             (currX !== endX || currY !== endY) ){
-            
+            console.log('movingStart = false');
+            // If you don't click on start neither end
+        
             if(grid[currX][currY].additionalEdgeValue === currentCellType)
                 grid[currX][currY].additionalEdgeValue = 0;
             else
                 grid[currX][currY].additionalEdgeValue = currentCellType;
             
             lastCellUpdated = grid[currX][currY];
-            mapChanged = true; // Notify view
+            
+            movingStart = false;
+            movingEnd = false;
+        }else if(currX === startX && currY === startY){
+            console.log('movingStart = true');
+            // If you click on start
+            movingStart = true;
+            movingEnd = false;
+        }else if(currX === endX && currY === endY){
+            // If you click on end
+            movingEnd = true;
+            movingStart = false;
         }
+        
+        mapChanged = true; // Notify view
     }
 }
 
 function mouseDragged() {
-    console.log("mouseX " + mouseX);
-    console.log("mouseY " + mouseY);
-    if(algorithmInProcess === false && algorithmFinished === false){
+    
+    if(pathfindingStatus === status.DEACTIVE){
         /* global mouseX, mouseY */
         currX = int(mouseX / wCell);
         currY = int(mouseY / hCell);
+        
+        console.log("currX " + currX);
+        console.log("currY " + currY);
+    
         // TODO Fix when outside of map
-        if( (currX !== startX || currY !== startY) &&
+        if(movingStart){
+            source = grid[currX][currY];
+            startX = currX;
+            startY = currY;
+        }else if(movingEnd){
+            target = grid[currX][currY];
+            endX = currX;
+            endY = currY;
+        }else{
+            if( (currX !== startX || currY !== startY) &&
             (currX !== endX || currY !== endY) &&
-            grid[currX][currY] !== lastCellUpdated){
-            
-            if(grid[currX][currY].additionalEdgeValue === currentCellType)
-                grid[currX][currY].additionalEdgeValue = 0;
-            else
-                grid[currX][currY].additionalEdgeValue = currentCellType;
-            
-            lastCellUpdated = grid[currX][currY];
-            mapChanged = true;
+                grid[currX][currY] !== lastCellUpdated){
+                
+                if(grid[currX][currY].additionalEdgeValue === currentCellType)
+                    grid[currX][currY].additionalEdgeValue = 0;
+                else
+                    grid[currX][currY].additionalEdgeValue = currentCellType;
+
+                lastCellUpdated = grid[currX][currY];
+            }
         }
+        
+        mapChanged = true;
     }
 }
