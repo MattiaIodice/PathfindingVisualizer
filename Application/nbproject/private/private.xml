@@ -3,8 +3,12 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+            <file>file:/C:/Users/Mattia/Desktop/Application/public_html/js/events/setHeuristic.js</file>
+            <file>file:/C:/Users/Mattia/Desktop/Application/public_html/js/events/setMaze.js</file>
             <file>file:/C:/Users/Mattia/Desktop/Application/public_html/js/sketch.js</file>
+            <file>file:/C:/Users/Mattia/Desktop/Application/public_html/js/events/resetAll.js</file>
             <file>file:/C:/Users/Mattia/Desktop/Application/public_html/js/events/setAlgorithm.js</file>
+            <file>file:/C:/Users/Mattia/Desktop/Application/public_html/js/mazes/randomMaze.js</file>
             <file>file:/C:/Users/Mattia/Desktop/Application/public_html/index.html</file>
             <file>file:/C:/Users/Mattia/Desktop/Application/public_html/js/pathfindings/aStar.js</file>
         </group>

@@ -9,18 +9,17 @@
 
 
 function freePointAndAdjacents(grid, pointX, pointY, rows, cols){
-    grid[pointY][pointX].additionalEdgeValue = 0;
+    grid[pointX][pointY].additionalEdgeValue = 0;
     
     if(pointY-1 >= 0)
         grid[pointX][pointY-1].additionalEdgeValue = 0;
     if(pointX-1 >= 0)
         grid[pointX-1][pointY].additionalEdgeValue = 0;
     if(pointX+1 < cols)
-        grid[pointX-1][pointY].additionalEdgeValue = 0;
+        grid[pointX+1][pointY].additionalEdgeValue = 0;
     if(pointY+1 < rows)
-        grid[pointX-1][pointY].additionalEdgeValue = 0;
+        grid[pointX][pointY+1].additionalEdgeValue = 0;
     
-    grid[pointY][pointX].additionalEdgeValue = 0;
 }
 
 function randomMaze(grid, cols, rows, denseWallsProb, startX, startY, endX, endY){
