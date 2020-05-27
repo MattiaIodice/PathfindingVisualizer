@@ -8,15 +8,17 @@
  */
 
 
-function freePointAndAdjacents(grid, pointX, pointY, rows, cols){
-    grid[pointX][pointY].additionalEdgeValue = 0;
+function freeAdjacents(grid, pointX, pointY, rows, cols){
     
     if(pointY-1 >= 0)
         grid[pointX][pointY-1].additionalEdgeValue = 0;
+        
     if(pointX-1 >= 0)
         grid[pointX-1][pointY].additionalEdgeValue = 0;
+        
     if(pointX+1 < cols)
         grid[pointX+1][pointY].additionalEdgeValue = 0;
+        
     if(pointY+1 < rows)
         grid[pointX][pointY+1].additionalEdgeValue = 0;
     
@@ -29,6 +31,8 @@ function randomMaze(grid, cols, rows, denseWallsProb, startX, startY, endX, endY
                 grid[i][j].additionalEdgeValue = -1;
         }
     
-    freePointAndAdjacents(grid, startX, startY, cols, rows);
-    freePointAndAdjacents(grid, endX, endY, cols, rows);
+    freeAdjacents(grid, startX, startY, cols, rows);
+    freeAdjacents(grid, endX, endY, cols, rows);
+    grid[startX][startY].additionalEdgeValue = 0;
+    grid[endX][endY].additionalEdgeValue = 0;
 }

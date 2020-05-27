@@ -1,25 +1,18 @@
-/* global currentHeuristicFunc */
+/* global currentHeuristicFunc, heuristicEnum */
 
 function setHeuristic(type){
     
     if(type === 'Manhattan'){
-        // Manhattan
-        currentHeuristicFunc = function(a,b){
-            return Math.abs(a.i-b.i) + Math.abs(a.j-b.j);
-        };
+        currentHeuristicFunc = heuristicEnum.MANHATTAN;
          
     }else if(type === 'Euclidean'){
-        // Euclidean
-        currentHeuristicFunc = function(a,b){
-            return dist(a.i, a.j, b.i, b.j);
-        };
+        currentHeuristicFunc = heuristicEnum.EUCLIDEAN;
+        
     }else if(type === 'Chebychev'){
-        // Chebychev
-        currentHeuristicFunc = function(a,b){
-            return 0;
-        };
-    }else{
-        // TODO
-        console.log("Not yet implemented the following heuristic");
+        currentHeuristicFunc = heuristicEnum.CHEBYCHEV;
+        
+    }else if(type === 'None'){
+        currentHeuristicFunc = heuristicEnum.NONE;
+        
     }
 }

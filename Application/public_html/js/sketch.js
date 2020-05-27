@@ -38,6 +38,20 @@ const status = {
     SUCCESS: 'success',
     FAILURE: 'failure'
 };
+const heuristicEnum = {
+    MANHATTAN:  function(a,b){
+                    return Math.abs(a.i-b.i) + Math.abs(a.j-b.j);
+                },
+    EUCLIDEAN:  function(a,b){
+                    return dist(a.i, a.j, b.i, b.j);
+                },
+    CHEBYCHEV:  function(a,b){
+                    return max(Math.abs(a.i-b.i), Math.abs(a.j-b.j));
+                },
+    NONE:       function(a,b){
+                    return 0;
+                }
+};
 var pathfindingStatus;
 
 // Other
@@ -97,8 +111,9 @@ function setup() {
  */
 
 function startPathfinding(){
-    if(currentPathfinding !== null)
+    if(currentPathfinding !== null){
         pathfindingStatus = status.ACTIVE;
+    }
     else
         console.log('Error!\nSelect a pathfinding algorithm!\n');
 }

@@ -26,7 +26,7 @@ function generateMaze(type){
     }else{
         // Hello! Maze
         console.log("Hello! Maze");
-        helloMaze(grid);
+        helloMaze(grid, startX, startY, endX, endY);
         
     }
     

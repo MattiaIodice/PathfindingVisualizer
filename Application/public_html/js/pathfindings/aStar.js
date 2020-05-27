@@ -64,6 +64,7 @@ function aStarStep(){
  */
 /* global grid, rows, cols, source, currentPathfinding */
 function aStarInit(){
+    resetAlgo();
     updateNeighborsAllNodes();
     
     for(var i = 0; i < cols; i++){

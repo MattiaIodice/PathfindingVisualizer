@@ -1,41 +1,60 @@
 /* Set true the flag of algorithmInProcess and
  * set the function pointer to an algorithm
- * 
- * global algorithmInProcess, currentPathfinding, currentHeuristicFunc */
+*/
+
+/* global currentPathfinding, currentHeuristicFunc, heuristicEnum */
 
 function setAlgorithm(type){
     
     if(type === 'A*'){
-        console.log("Selected A*");
+        // If the heuristic is not set
+        if(currentHeuristicFunc === heuristicEnum.NONE)
+            // Set Manhattan as default
+            currentHeuristicFunc = heuristicEnum.MANHATTAN;
+        
+        document.getElementById('HeuristicsDropdown').classList.remove("disabled");
+        
         // A*
         aStarInit();
         currentPathfinding = function(){
             return aStarStep();
         };
+        
          
     }else if(type === 'Dijkstra'){
-        console.log("Selected Dijkstra");
-        // No heuristic (Dijkstra)
+        // No heuristic
+        currentHeuristicFunc = heuristicEnum.NONE;
+        document.getElementById('HeuristicsDropdown').classList.add("disabled");
+        
+        // Dijkstra
         aStarInit();
         currentPathfinding = function(){
             return aStarStep();
         };
         
-        currentHeuristicFunc = function(a,b){
-            return 0;
-        };
+        
         
     }else if(type === 'BFS'){
+        // No heuristic
+        currentHeuristicFunc = heuristicEnum.NONE;
+        document.getElementById('HeuristicsDropdown').classList.add("disabled");
+        
         console.log("Selected BFS");
         // TODO
         // Implement BFS
         console.log("BFS has not been implemented yet");
         
+        
     }else if(type === 'DFS'){
+        // No heuristic
+        currentHeuristicFunc = heuristicEnum.NONE;
+        document.getElementById('HeuristicsDropdown').classList.add("disabled");
+        
         console.log("Selected DFS");
         // TODO
         // Implement DFS
         console.log("DFS has not been implemented yet");
+        
         
     }
 }

@@ -95,7 +95,7 @@
                         </ul>
                     </li>
                     
-                    <li class="dropdown">
+                    <li class="dropdown" id="HeuristicsDropdown">
                         <a class="dropdown-toggle"
                             data-toggle="dropdown"
                             href="#">
@@ -133,21 +133,9 @@
                 </div>
                 
                 
-                <div class="dropdown navbar-btn">
-                    
-                    <ul class="dropdown-menu">
-                      <li><a href="#">HTML</a></li>
-                      <li><a href="#">CSS</a></li>
-                      <li><a href="#">JavaScript</a></li>
-                    </ul>
-                </div>
-                
-                
             </div>
         
         </nav>
-        
-        <span>Choose a maze, or generate on your own, and solve it!</span> <br>
         
         <!-- JS/Bootstrap Import -->
         <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
@@ -166,6 +154,7 @@
         <script src="js/events/resetAlgo.js"></script>
         <script src="js/events/resetAll.js"></script>
         <script src="js/events/setAlgorithm.js"></script>
+        <script src="js/events/setHeuristic.js"></script>
         <script src="js/events/setMaze.js"></script>
         <script src="js/events/setTypeCell.js"></script>
         <script src="js/events/setVelocity.js"></script>
@@ -181,7 +170,35 @@
         <script src="js/utils/removeFromArray.js"></script>
         <!-- visualizers -->
         <script src="js/visualizers/visualizeMap.js"></script>
-        <script src="js/visualizers/visualizePath.js"></script>
+        <script src="js/visualizers/visualizePath.js"></script> -->
+        
+        <span>Choose a maze, or generate on your own, and solve it!</span> <br>
+        
+        <!-- Footer -->
+        <footer class="footer">
+
+          <!-- Copyright -->
+          <div>© 2020 Author:
+            <a href="https://www.mattiaiodice.com/"> Mattia Iodice</a>
+          </div>
+          
+          <div>Code:
+            <a href="https://mdbootstrap.com/"> GitHub</a>
+          </div>
+
+        </footer>
         
     </body>
+    
 </html>
+<style>
+    .footer {
+        position: fixed;
+        left: 0;
+        bottom: 0;
+        width: 100%;
+        background-color: lightgray;
+        color: grey;
+        text-align: center;
+    }
+</style>
