@@ -52,6 +52,13 @@ const heuristicEnum = {
                     return 0;
                 }
 };
+const cellEnum = {
+    WALL:      -1,
+    PASSAGE:    0,
+    TALLGRASS:  1,
+    MUG:        2,
+    WATER:      3
+};
 var pathfindingStatus;
 
 // Other

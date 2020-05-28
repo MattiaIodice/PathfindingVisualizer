@@ -1,14 +1,19 @@
-/* global currentCellType */
+/* global currentCellType, cellEnum */
 
 function setTypeCell(type){
-    // TODO It should be better with enum
+    
     if(type === 'Wall')
         // Add wall
-        currentCellType = -1;
+        currentCellType = cellEnum.WALL;
+    else if(type === 'TallGrass')
+        // Add water
+        currentCellType = cellEnum.TALLGRASS;
     else if(type === 'Mug')
         // Add mug
-        currentCellType = 1;
-    else
+        currentCellType = cellEnum.MUG;
+    else if(type === 'Water')
         // Add water
-        currentCellType = 2;
+        currentCellType = cellEnum.WATER;
+    else
+        console.log('Error! Not yet implemented this cell type.');
 }

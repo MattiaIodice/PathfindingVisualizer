@@ -5,22 +5,30 @@
  */
 
 
-/* global grid, cols, rows, openSet, closedSet, primInProcess, source, target */
+/* global grid, cols, rows, openSet, closedSet, source, target, cellEnum */
 
 function visualizeMap(){
+    // TODO Inefficient, I may save the needed change cells
     for(let i = 0; i < cols; i++){
         for(let j = 0; j < rows; j++){
-            if(grid[i][j].additionalEdgeValue === -1)
-                // wall = black
+            // colorWall --> black
+            if(grid[i][j].additionalEdgeValue === cellEnum.WALL)
                 grid[i][j].show(color(0));
-            else if(grid[i][j].additionalEdgeValue === 0)
-                // ground = white
+            
+            // colorGround --> white
+            else if(grid[i][j].additionalEdgeValue === cellEnum.PASSAGE)
                 grid[i][j].show(color(255));
-            else if(grid[i][j].additionalEdgeValue === 1)
-                // mug = brown
+            
+            // colorTallGrass --> green
+            else if(grid[i][j].additionalEdgeValue === cellEnum.TALLGRASS)
+                grid[i][j].show(color(0, 135, 0));
+            
+            // colorMug --> brown
+            else if(grid[i][j].additionalEdgeValue === cellEnum.MUG)
                 grid[i][j].show(color(173, 81, 0));
-            else
-                // water = blue
+            
+            // colorWater --> blue
+            else if(grid[i][j].additionalEdgeValue === cellEnum.WATER)
                 grid[i][j].show(color(0, 135, 131));
         }
     }
@@ -28,9 +36,8 @@ function visualizeMap(){
     for(let i = 0; i < openSet.length; i++)
         openSet[i].show(color(0, 255, 0));
 
-    // if(primInProcess === false)
-        for(let i = 0; i < closedSet.length; i++)
-            closedSet[i].show(color(255, 0, 0));
+    for(let i = 0; i < closedSet.length; i++)
+        closedSet[i].show(color(255, 0, 0));
 
     source.show(color(0, 0, 255));
     target.show(color(255, 0, 255));
