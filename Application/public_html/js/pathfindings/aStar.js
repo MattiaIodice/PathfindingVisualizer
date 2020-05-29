@@ -81,24 +81,6 @@ function aStarInit(){
     openSet.push(source); // Q
 }
 
-/* ================= Update Neighbors =================
- * Reset neighbors for each cell due to modified map
- * @param None
- * @returns void
- */
-function updateNeighborsAllNodes(){
-    // TODO Inefficient
-    for(var i = 0; i < cols; i++)
-        for(var j = 0; j < rows; j++){
-            // Delete old neighbors
-            grid[i][j].neighbors = [];
-            // Add new neighbors
-            grid[i][j].addNeighbors(grid);
-        }
-    source.isWall = false;
-    target.isWall = false;
-}
-
 function heuristic(curr, target){
     return currentHeuristicFunc(curr, target);
 }

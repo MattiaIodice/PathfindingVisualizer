@@ -5,40 +5,56 @@
  */
 
 
-/* global grid, cols, rows, openSet, closedSet, source, target, cellEnum */
+/* global grid, cols, rows, openSet, closedSet, source, target, cellEnum, colorEnum */
+
+// TODO Inefficient, I may save the needed change cells
 
 function visualizeMap(){
-    // TODO Inefficient, I may save the needed change cells
+    
+    // Show cells
     for(let i = 0; i < cols; i++){
         for(let j = 0; j < rows; j++){
-            // colorWall --> black
             if(grid[i][j].additionalEdgeValue === cellEnum.WALL)
-                grid[i][j].show(color(0));
+                grid[i][j].show(colorEnum.BLACK); // Wall --> black
             
-            // colorGround --> white
             else if(grid[i][j].additionalEdgeValue === cellEnum.PASSAGE)
-                grid[i][j].show(color(255));
+                grid[i][j].show(colorEnum.WHITE); // Passage --> white
             
-            // colorTallGrass --> green
             else if(grid[i][j].additionalEdgeValue === cellEnum.TALLGRASS)
-                grid[i][j].show(color(0, 135, 0));
+                grid[i][j].show(colorEnum.GREEN); // TallGrass --> green
             
-            // colorMug --> brown
             else if(grid[i][j].additionalEdgeValue === cellEnum.MUG)
-                grid[i][j].show(color(173, 81, 0));
+                grid[i][j].show(colorEnum.BROWN); // Mug --> brown
             
-            // colorWater --> blue
             else if(grid[i][j].additionalEdgeValue === cellEnum.WATER)
-                grid[i][j].show(color(0, 135, 131));
+                grid[i][j].show(colorEnum.BLUE); // Water --> blue
         }
     }
 
+    // Show openSet
     for(let i = 0; i < openSet.length; i++)
-        openSet[i].show(color(0, 255, 0));
+        openSet[i].show(colorEnum.ORANGE);
+        
+    // Show closedSet
+    for(let i = 0; i < closedSet.length; i++){
+        // Passage in closedSet --> dark grey
+        if(closedSet[i].additionalEdgeValue === cellEnum.PASSAGE)
+            closedSet[i].show(colorEnum.DARKGREY);
 
-    for(let i = 0; i < closedSet.length; i++)
-        closedSet[i].show(color(255, 0, 0));
+        // Tall Grass in closedSet --> dark green
+        else if(closedSet[i].additionalEdgeValue === cellEnum.TALLGRASS)
+            closedSet[i].show(colorEnum.DARKGREEN);
 
-    source.show(color(0, 0, 255));
-    target.show(color(255, 0, 255));
+        // Mug in closedSet --> dark brown
+        else if(closedSet[i].additionalEdgeValue === cellEnum.MUG)
+            closedSet[i].show(colorEnum.DARKBROWN);
+
+        // Water in closedSet --> dark blue
+        else if(closedSet[i].additionalEdgeValue === cellEnum.WATER)
+            closedSet[i].show(colorEnum.DARKBLUE);
+    }
+        
+
+    source.show(colorEnum.SOURCE);
+    target.show(colorEnum.TARGET);
 }

@@ -39,10 +39,11 @@ function setAlgorithm(type){
         currentHeuristicFunc = heuristicEnum.NONE;
         document.getElementById('HeuristicsDropdown').classList.add("disabled");
         
-        console.log("Selected BFS");
-        // TODO
-        // Implement BFS
-        console.log("BFS has not been implemented yet");
+        console.log('Choose BFS');
+        bfsInit();
+        currentPathfinding = function(){
+            return bfsStep();
+        };
         
         
     }else if(type === 'DFS'){
@@ -50,11 +51,10 @@ function setAlgorithm(type){
         currentHeuristicFunc = heuristicEnum.NONE;
         document.getElementById('HeuristicsDropdown').classList.add("disabled");
         
-        console.log("Selected DFS");
-        // TODO
-        // Implement DFS
-        console.log("DFS has not been implemented yet");
-        
-        
+        console.log('Choose DFS');
+        dfsInit();
+        currentPathfinding = function(){
+            return dfsStep();
+        };
     }
 }

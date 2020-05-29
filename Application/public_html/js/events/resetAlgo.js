@@ -16,4 +16,8 @@ function resetAlgo(){
     
     pred = [];
     mapChanged = true;
+    
+    /* Maybe it is possible to compute just
+     * closedSet = [] and openSet = [] due to
+     * the garbage collection */
 }

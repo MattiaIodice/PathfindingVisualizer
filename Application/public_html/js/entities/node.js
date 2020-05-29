@@ -6,7 +6,7 @@
   * @returns {object} Node 
 */
  
-/* global hCell, wCell, cols, rows */
+/* global hCell, wCell, cols, rows, grid */
 
 function CellNode(i,j){
     this.i = i; // Position
@@ -18,11 +18,12 @@ function CellNode(i,j){
     this.predecessor;
     
     this.neighbors = [];
-    /* ---- Important property of node ----
+    /* ---- Important property of a node ----
      * additionalEdgeValue = -1 <=> Wall
      * additionalEdgeValue = 0  <=> Ground
-     * additionalEdgeValue = 1  <=> Mug
-     * additionalEdgeValue = 2  <=> Water
+     * additionalEdgeValue = 1  <=> Tall Grass
+     * additionalEdgeValue = 2  <=> Mug
+     * additionalEdgeValue = 3  <=> Water
      */
     this.additionalEdgeValue = 0;
     
@@ -49,4 +50,23 @@ function CellNode(i,j){
         if(j > 0 && grid[i][j-1].additionalEdgeValue !== -1)
             this.neighbors.push(grid[i][j-1]);
     };
+    
+}
+
+
+
+/* ================= Update Neighbors =================
+* Reset neighbors for each cell due to modified map
+* @param None
+* @returns void
+*/
+function updateNeighborsAllNodes(){
+    // TODO Inefficient
+    for(var i = 0; i < cols; i++)
+        for(var j = 0; j < rows; j++){
+            // Delete old neighbors
+            grid[i][j].neighbors = [];
+            // Add new neighbors
+            grid[i][j].addNeighbors(grid);
+        }
 }

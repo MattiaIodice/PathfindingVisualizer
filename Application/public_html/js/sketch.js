@@ -59,6 +59,7 @@ const cellEnum = {
     MUG:        2,
     WATER:      3
 };
+var colorEnum;
 var pathfindingStatus;
 
 // Other
@@ -80,6 +81,30 @@ var denseWallsProb;
  * @returns {undefined}
  */
 function setup() {
+    colorEnum = {
+        // Empty cells
+        BLACK:  color(0),
+        WHITE:  color(255),
+        GREEN:  color(0, 135, 0),
+        BROWN:  color(173, 81, 0),
+        BLUE:   color(0, 135, 131),
+
+        // closedSet
+        DARKGREY:   color(70, 70, 70),
+        DARKGREEN:  color(0, 45, 0),
+        DARKBROWN:  color(85, 30, 0),
+        DARKBLUE:   color(0, 36, 86),
+
+        // openSet
+        ORANGE: color(255, 119, 0),
+
+        // path
+        GOLD: color(255, 255, 0),
+
+        // path
+        SOURCE: color(0, 0, 255),
+        TARGET: color(255, 0, 255)
+    };
     createCanvas(400, 400);
     
     for(var i = 0; i < cols; i++)
@@ -125,9 +150,12 @@ function startPathfinding(){
         console.log('Error!\nSelect a pathfinding algorithm!\n');
 }
 
+var num = 0;
+
 function updateLogic(){
     // Logic step
     if(pathfindingStatus === status.ACTIVE){
+        console.log('Before callback ' + (num++));
         currentPathfinding();
         mapChanged = true;
     }
@@ -143,8 +171,8 @@ function updateMap(){
         if(pathfindingStatus === status.SUCCESS){
             console.log("The shortest path distance is " + target.g);
             
-            visualizePath(target);
-            
+            visualizePathSourceTarget();
+
             // Reset pathfindings status
             pathfindingStatus = status.DEACTIVE;
         }else if(pathfindingStatus === status.FAILURE){
