@@ -7,10 +7,10 @@
 /* global grid, rows, cols, source, currentPathfinding */
 function dfsInit(){
     
-    // Init openSet (Stack) and closedSet (Array)
-    openSet = new Stack();
-    openSet.push(source); // S
-    closedSet = [];
+    // Init openSet (Stack) and colored (Array of colors)
+    openSet = [];
+    openSet.push(source);
+    colored = new Map();
     
     // Recalculate neighbors
     // TODO Inefficient, I could call the
@@ -29,7 +29,7 @@ function dfsInit(){
 }
 
 function dfsStep(){
-    if(!openSet.isEmpty()){
+    if(openSet.length > 0){
         curr = openSet.pop();
         
         if(curr === target){
@@ -40,7 +40,8 @@ function dfsStep(){
             for(let i = 0; i < adjacents.length; i++){
                 let currAdj = adjacents[i];
                 
-                if(!closedSet.includes(currAdj)){
+                if(!colored.get(currAdj)){
+                    colored.set(currAdj, true);
                     openSet.push(currAdj);
                     currAdj.g = curr.g+1;
                     currAdj.predecessor = curr;
@@ -49,7 +50,7 @@ function dfsStep(){
             }
         }
         
-        closedSet.push(curr);
+        colored.set(curr, true);
     }else{
         // FAILURE
         pathfindingStatus = status.FAILURE;

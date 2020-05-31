@@ -27,8 +27,9 @@ var currentPathfinding;
 var currentMaze;
 
 // Pathfinding
-var openSet = [];       // Q, this is a stack
-var closedSet = [];     // V \ Q, this is a stack
+var openSet = [];           // For A* and Dijkstra, i.e. Q
+var closedSet = [];         // For A* and Dijkstra, i.e. V \ Q
+var colored = new Map();    // For BFS and DFS
 var pred = new Map();   // Shortest path
 
 // Pathfindings status

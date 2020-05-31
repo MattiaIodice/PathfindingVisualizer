@@ -5,21 +5,24 @@
 
 
 /* global grid, rows, cols, source, currentPathfinding */
+
+/* -------- Initialize BFS --------
+ * Info:    Init openSet (Queue), colored (Map of colors),
+ *          predecessor for all nodes and g value
+ */
 function bfsInit(){
-    
-    // Init openSet (Queue) and closedSet (Array)
-    openSet = []; // new Queue();
-    openSet.push(source); // Q
-    closedSet = [];
+    openSet = [];
+    openSet.push(source);
+    colored = new Map();
     
     // Recalculate neighbors
-    // TODO Inefficient, I could call the
-    // update of neighbors in runtime during
-    // the UI drawing of the map
+    // TODO Inefficient, I could call the update of neighbors
+    // in runtime during the UI drawing of the map
     updateNeighborsAllNodes();
     
     for(let i = 0; i < cols; i++){
         for(let j = 0; j < rows; j++){
+            //colored.set(grid[i][j], false);
             grid[i][j].predecessor = null;
             grid[i][j].g = Infinity;
         }
@@ -28,18 +31,10 @@ function bfsInit(){
     source.g = 0;
 }
 
-var step = 0;
-
 function bfsStep(){
     
-    if(openSet.length > 0){     
-        /*if(step === 1){
-            pathfindingStatus = status.SUCCESS;
-            return;
-        }*/
-        console.log("Step " + (step++));
+    if(openSet.length > 0){
         curr = openSet.shift();
-        console.log('Computing (' + curr.i + ", " + curr.j + ")");
         
         
         if(curr === target){
@@ -50,8 +45,8 @@ function bfsStep(){
             for(let i = 0; i < adjacents.length; i++){
                 let currAdj = adjacents[i];
                 
-                
-                if(!closedSet.includes(currAdj)){
+                if(!colored.get(currAdj)){
+                    colored.set(currAdj, true);
                     openSet.push(currAdj);
                     currAdj.g = curr.g+1;
                     currAdj.predecessor = curr;
@@ -59,10 +54,7 @@ function bfsStep(){
             }
         }
         
-        /*console.log('openSet = ' + openSet.items);
-        console.log('closedSet = ' + closedSet);*/
-        
-        closedSet.push(curr);
+        colored.set(curr, true);
     }else{
         // FAILURE
         pathfindingStatus = status.FAILURE;

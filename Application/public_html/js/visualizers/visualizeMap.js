@@ -5,7 +5,7 @@
  */
 
 
-/* global grid, cols, rows, openSet, closedSet, source, target, cellEnum, colorEnum */
+/* global grid, cols, rows, openSet, closedSet, source, target, cellEnum, colorEnum, colored */
 
 // TODO Inefficient, I may save the needed change cells
 
@@ -53,8 +53,30 @@ function visualizeMap(){
         else if(closedSet[i].additionalEdgeValue === cellEnum.WATER)
             closedSet[i].show(colorEnum.DARKBLUE);
     }
+    
+    colored.forEach(colorProcessed);
         
 
     source.show(colorEnum.SOURCE);
     target.show(colorEnum.TARGET);
+}
+
+function colorProcessed(value, key, map){
+    if(value === true){
+        // Passage in closedSet --> dark grey
+        if(key.additionalEdgeValue === cellEnum.PASSAGE)
+            key.show(colorEnum.DARKGREY);
+
+        // Tall Grass in closedSet --> dark green
+        else if(key.additionalEdgeValue === cellEnum.TALLGRASS)
+            key.show(colorEnum.DARKGREEN);
+
+        // Mug in closedSet --> dark brown
+        else if(key.additionalEdgeValue === cellEnum.MUG)
+            key.show(colorEnum.DARKBROWN);
+
+        // Water in closedSet --> dark blue
+        else if(key.additionalEdgeValue === cellEnum.WATER)
+            key.show(colorEnum.DARKBLUE);
+    }
 }
