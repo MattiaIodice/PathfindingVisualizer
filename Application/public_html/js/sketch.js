@@ -6,20 +6,25 @@
 // TODO Hanno senso tutti questi var scritti? Leggi documentazione!
 // Global variables
 
-// Grid
-var width = 400; // Size grid
-var height = 400;
-var rows = 24; // Rows grid
-var cols = 24; // Cols grid
-var wCell = width / cols;  // Weight and height of a cell
-var hCell = height / rows;
+// Size canvas
+var CANVAS_WIDTH = 600;
+var CANVAS_HEIGHT = 600;
+// Rows and columns of grid
+var rows = 24;
+var cols = 24;
+// Weight and height of a grid cell
+var wCell = CANVAS_WIDTH / cols;
+var hCell = CANVAS_HEIGHT / rows;
+// Start point position
 var startX = 1;
 var startY = 1;
+var source;
+// End point position
 var endX = rows-2;
 var endY = cols-2;
-var grid = new Array(cols);
-var source;
 var target;
+
+var grid = new Array(cols);
 
 // Function pointers
 var currentHeuristicFunc;
@@ -106,7 +111,9 @@ function setup() {
         SOURCE: color(0, 0, 255),
         TARGET: color(255, 0, 255)
     };
-    createCanvas(400, 400);
+    console.log('CANVAS_WIDTH ' + CANVAS_WIDTH);
+    console.log('CANVAS_HEIGHT ' + CANVAS_HEIGHT);
+    createCanvas(CANVAS_WIDTH, CANVAS_HEIGHT);
     
     for(var i = 0; i < cols; i++)
         grid[i] = new Array(rows);
@@ -192,74 +199,82 @@ function draw() {
     updateMap();
 }
 
+/* global mouseX, mouseY */
 function mousePressed() {
-    if(pathfindingStatus === status.DEACTIVE){
-        /* global mouseX, mouseY */
-        currX = int(mouseX / wCell);
-        currY = int(mouseY / hCell);
-        
-        if( (currX !== startX || currY !== startY) &&
-            (currX !== endX || currY !== endY) ){
-            console.log('movingStart = false');
-            // If you don't click on start neither end
-        
-            if(grid[currX][currY].additionalEdgeValue === currentCellType)
-                grid[currX][currY].additionalEdgeValue = 0;
-            else
-                grid[currX][currY].additionalEdgeValue = currentCellType;
-            
-            lastCellUpdated = grid[currX][currY];
-            
-            movingStart = false;
-            movingEnd = false;
-        }else if(currX === startX && currY === startY){
-            console.log('movingStart = true');
-            // If you click on start
-            movingStart = true;
-            movingEnd = false;
-        }else if(currX === endX && currY === endY){
-            // If you click on end
-            movingEnd = true;
-            movingStart = false;
-        }
-        
-        mapChanged = true; // Notify view
-    }
-}
+    // Click inside the map
+    if(mouseX >= 0 && mouseX < CANVAS_WIDTH && mouseY >= 0 && mouseY < CANVAS_HEIGHT){
+        // If there is not an algorithm in process
+        if(pathfindingStatus === status.DEACTIVE){            
+            currX = int(mouseX / wCell);
+            currY = int(mouseY / hCell);
 
-function mouseDragged() {
-    
-    if(pathfindingStatus === status.DEACTIVE){
-        /* global mouseX, mouseY */
-        currX = int(mouseX / wCell);
-        currY = int(mouseY / hCell);
-        
-        console.log("currX " + currX);
-        console.log("currY " + currY);
-    
-        // TODO Fix when outside of map
-        if(movingStart){
-            source = grid[currX][currY];
-            startX = currX;
-            startY = currY;
-        }else if(movingEnd){
-            target = grid[currX][currY];
-            endX = currX;
-            endY = currY;
-        }else{
             if( (currX !== startX || currY !== startY) &&
-            (currX !== endX || currY !== endY) &&
-                grid[currX][currY] !== lastCellUpdated){
-                
+                (currX !== endX || currY !== endY) ){
+                // Click neither on start nor on end
                 if(grid[currX][currY].additionalEdgeValue === currentCellType)
                     grid[currX][currY].additionalEdgeValue = 0;
                 else
                     grid[currX][currY].additionalEdgeValue = currentCellType;
 
                 lastCellUpdated = grid[currX][currY];
+
+                movingStart = false;
+                movingEnd = false;
+            }else if(currX === startX && currY === startY){
+                // Click on start
+                movingStart = true;
+                movingEnd = false;
+            }else if(currX === endX && currY === endY){
+                // Click on end
+                movingEnd = true;
+                movingStart = false;
             }
+            
+            // Notify view
+            mapChanged = true;
         }
-        
-        mapChanged = true;
+    }
+    
+}
+
+/* global mouseX, mouseY */
+function mouseDragged() {
+    // Click inside the map
+    if(mouseX >= 0 && mouseX < CANVAS_WIDTH && mouseY >= 0 && mouseY < CANVAS_HEIGHT){
+        // If there is not an algorithm in process
+        if(pathfindingStatus === status.DEACTIVE){
+            currX = int(mouseX / wCell);
+            currY = int(mouseY / hCell);
+            
+            if(movingStart){
+                if(currX !== endX || currY !== endY){
+                    // Drag start point
+                    source = grid[currX][currY];
+                    startX = currX;
+                    startY = currY;
+                }
+            }else if(movingEnd){
+                if(currX !== startX || currY !== startY){
+                    // Drag end point
+                    target = grid[currX][currY];
+                    endX = currX;
+                    endY = currY;
+                }
+            }else{
+                if( (currX !== startX || currY !== startY) &&
+                (currX !== endX || currY !== endY) &&
+                    grid[currX][currY] !== lastCellUpdated){
+                    // Drag neither on start nor on end
+                    if(grid[currX][currY].additionalEdgeValue === currentCellType)
+                        grid[currX][currY].additionalEdgeValue = 0;
+                    else
+                        grid[currX][currY].additionalEdgeValue = currentCellType;
+
+                    lastCellUpdated = grid[currX][currY];
+                }
+            }
+
+            mapChanged = true;
+        }
     }
 }
