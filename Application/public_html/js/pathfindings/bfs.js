@@ -4,16 +4,15 @@
  */
 
 
-/* global grid, rows, cols, source, currentPathfinding */
-
 /* -------- Initialize BFS --------
- * Info:    Init openSet (Queue), colored (Map of colors),
- *          predecessor for all nodes and g value
+ * Info:    Init queue (Queue) --> To visit
+ *               color (Map)   --> Node to String (i.e. color)
  */
+
+/* global grid, rows, cols, source, target, queue, color, Infinity, algorithmInProgress */
 function bfsInit(){
-    openSet = [];
-    openSet.push(source);
-    colored = new Map();
+    resetAlgo();
+    algorithmInProgress = 'Traversal';
     
     // Recalculate neighbors
     // TODO Inefficient, I could call the update of neighbors
@@ -22,20 +21,21 @@ function bfsInit(){
     
     for(let i = 0; i < cols; i++){
         for(let j = 0; j < rows; j++){
-            //colored.set(grid[i][j], false);
+            color.set(grid[i][j], 'w');
             grid[i][j].predecessor = null;
             grid[i][j].g = Infinity;
         }
     }
     
+    queue.push(source);
+    color.set(source, 'g');
     source.g = 0;
 }
 
 function bfsStep(){
     
-    if(openSet.length > 0){
-        curr = openSet.shift();
-        
+    if(queue.length > 0){
+        curr = queue.shift();
         
         if(curr === target){
             // SUCCESS
@@ -45,16 +45,16 @@ function bfsStep(){
             for(let i = 0; i < adjacents.length; i++){
                 let currAdj = adjacents[i];
                 
-                if(!colored.get(currAdj)){
-                    colored.set(currAdj, true);
-                    openSet.push(currAdj);
+                if(color.get(currAdj) === 'w'){
+                    color.set(currAdj, 'g');
+                    queue.push(currAdj);
                     currAdj.g = curr.g+1;
                     currAdj.predecessor = curr;
                 }
             }
         }
         
-        colored.set(curr, true);
+        color.set(currAdj, 'b');
     }else{
         // FAILURE
         pathfindingStatus = status.FAILURE;

@@ -1,15 +1,47 @@
 /* ---------------- Visualize Map ----------------
  *  Author: Mattia Iodice
- *  Info: Show map changing additionalEdgeValue
- *        for each cell of the grid
+ *  Info:   Set of functions for showing algorithms and
+ *          changes about the map
  */
 
 
-/* global grid, cols, rows, openSet, closedSet, source, target, cellEnum, colorEnum, colored */
+/* global grid, cols, rows, openSet, closedSet, source, target, cellEnum, colorEnum, colors, algorithmInProgress */
 
-// TODO Inefficient, I may save the needed change cells
 
-function visualizeMap(){
+function updateMap(){
+    // Refresh map
+    background(180);
+    
+    visualizeGrid();
+    
+    if(algorithmInProgress === 'Traversal'){
+        visualizeShortestPathAlgo();
+    }else if(algorithmInProgress === 'Shortest'){
+        color.forEach(visualizeTraversalAlgo);
+    }
+
+    if(pathfindingStatus === status.SUCCESS){
+        console.log("The shortest path distance is " + target.g);
+
+        visualizePathSourceTarget();
+
+        // Reset pathfindings status
+        pathfindingStatus = status.DEACTIVE;
+    }else if(pathfindingStatus === status.FAILURE){
+        console.log("There is not exist a path");
+
+        // Reset pathfindings status
+        pathfindingStatus = status.DEACTIVE;
+    }
+
+    mapChanged = false;
+    
+    source.show(colorEnum.SOURCE);
+    target.show(colorEnum.TARGET);
+}
+
+function visualizeGrid(){
+    // TODO Inefficient, I may save the needed change cells
     
     // Show cells
     for(let i = 0; i < cols; i++){
@@ -30,7 +62,31 @@ function visualizeMap(){
                 grid[i][j].show(colorEnum.BLUE); // Water --> blue
         }
     }
+}
 
+function visualizeTraversalAlgo(value, key, map){
+    if(value === 'b'){
+        // Passage in closedSet --> dark grey
+        if(key.additionalEdgeValue === cellEnum.PASSAGE)
+            key.show(colorEnum.DARKGREY);
+
+        // Tall Grass in closedSet --> dark green
+        else if(key.additionalEdgeValue === cellEnum.TALLGRASS)
+            key.show(colorEnum.DARKGREEN);
+
+        // Mug in closedSet --> dark brown
+        else if(key.additionalEdgeValue === cellEnum.MUG)
+            key.show(colorEnum.DARKBROWN);
+
+        // Water in closedSet --> dark blue
+        else if(key.additionalEdgeValue === cellEnum.WATER)
+            key.show(colorEnum.DARKBLUE);
+    }else if(value === 'g'){
+        key.show(colorEnum.ORANGE);
+    }
+}
+
+function visualizeShortestPathAlgo(){
     // Show openSet
     for(let i = 0; i < openSet.length; i++)
         openSet[i].show(colorEnum.ORANGE);
@@ -53,30 +109,34 @@ function visualizeMap(){
         else if(closedSet[i].additionalEdgeValue === cellEnum.WATER)
             closedSet[i].show(colorEnum.DARKBLUE);
     }
-    
-    colored.forEach(colorProcessed);
-        
-
-    source.show(colorEnum.SOURCE);
-    target.show(colorEnum.TARGET);
 }
 
-function colorProcessed(value, key, map){
-    if(value === true){
-        // Passage in closedSet --> dark grey
-        if(key.additionalEdgeValue === cellEnum.PASSAGE)
-            key.show(colorEnum.DARKGREY);
-
-        // Tall Grass in closedSet --> dark green
-        else if(key.additionalEdgeValue === cellEnum.TALLGRASS)
-            key.show(colorEnum.DARKGREEN);
-
-        // Mug in closedSet --> dark brown
-        else if(key.additionalEdgeValue === cellEnum.MUG)
-            key.show(colorEnum.DARKBROWN);
-
-        // Water in closedSet --> dark blue
-        else if(key.additionalEdgeValue === cellEnum.WATER)
-            key.show(colorEnum.DARKBLUE);
+function updateMap(){
+    // Refresh map
+    background(180);
+    
+    visualizeGrid();
+    
+    if(algorithmInProgress === 'Traversal'){
+        visualizeShortestPathAlgo();
+    }else if(algorithmInProgress === 'Shortest'){
+        color.forEach(visualizeTraversalAlgo);
     }
+
+    if(pathfindingStatus === status.SUCCESS){
+        console.log("The shortest path distance is " + target.g);
+
+        visualizePathSourceTarget();
+
+        // Reset pathfindings status
+        pathfindingStatus = status.DEACTIVE;
+    }else if(pathfindingStatus === status.FAILURE){
+        console.log("There is not exist a path");
+
+        // Reset pathfindings status
+        pathfindingStatus = status.DEACTIVE;
+    }
+
+    mapChanged = false;
+    
 }

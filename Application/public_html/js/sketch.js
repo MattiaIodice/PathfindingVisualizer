@@ -32,10 +32,12 @@ var currentPathfinding;
 var currentMaze;
 
 // Pathfinding
-var openSet = [];           // For A* and Dijkstra, i.e. Q
-var closedSet = [];         // For A* and Dijkstra, i.e. V \ Q
-var colored = new Map();    // For BFS and DFS
-var pred = new Map();   // Shortest path
+var openSet;            // For A* and Dijkstra, i.e. Q
+var closedSet;          // For A* and Dijkstra, i.e. V \ Q
+var color;              // For BFS and DFS
+var queue;              // For BFS and DFS
+//var pred = new Map();       // Shortest path
+var algorithmInProgress;
 
 // Pathfindings status
 const status = {
@@ -82,10 +84,9 @@ var denseWallsProb;
 
 
 
-/** =========== Setup Function ===========
- * Init function of p5.js
- * @returns {undefined}
- */
+/** =================================================================
+ *  =========== p5JS function - Init all global variables ===========
+ *  ================================================================= */
 function setup() {
     colorEnum = {
         // Empty cells
@@ -118,9 +119,15 @@ function setup() {
     for(var i = 0; i < cols; i++)
         grid[i] = new Array(rows);
     
+    openSet = [];           // For A* and Dijkstra, i.e. Q
+    closedSet = [];         // For A* and Dijkstra, i.e. V \ Q
+    color = new Map();      // For BFS and DFS
+    queue = [];             // For BFS and DFS
+    
     for(var i = 0; i < cols; i++)
         for(var j = 0; j < rows; j++){
             grid[i][j] = new CellNode(i,j);
+            color.set(grid[i][j], 'w');
         }
     
     source = grid[startX][startY];
@@ -158,47 +165,26 @@ function startPathfinding(){
         console.log('Error!\nSelect a pathfinding algorithm!\n');
 }
 
-var num = 0;
-
-function updateLogic(){
-    // Logic step
-    if(pathfindingStatus === status.ACTIVE){
-        console.log('Before callback ' + (num++));
-        currentPathfinding();
-        mapChanged = true;
-    }
-}
-
-function updateMap(){
-    // Refresh map
-    if(mapChanged === true){
-        background(180);
-        
-        visualizeMap();
-        
-        if(pathfindingStatus === status.SUCCESS){
-            console.log("The shortest path distance is " + target.g);
-            
-            visualizePathSourceTarget();
-
-            // Reset pathfindings status
-            pathfindingStatus = status.DEACTIVE;
-        }else if(pathfindingStatus === status.FAILURE){
-            console.log("There is not exist a path");
-            
-            // Reset pathfindings status
-            pathfindingStatus = status.DEACTIVE;
-        }
-        
-        mapChanged = false;
-    }
-}
-
+/** =================================================================
+ *  ================ p5JS function - Logic + Refresh ================
+ *  ================================================================= */
 function draw() {
-    updateLogic();
-    updateMap();
+    if(pathfindingStatus === status.ACTIVE){
+        // Pathfinding in progress
+        currentPathfinding();
+        updateMap();
+    }else if(mapChanged === true){
+        // User interaction
+        updateMap();
+        source.show(colorEnum.SOURCE);
+    target.show(colorEnum.TARGET);
+    }
+    
 }
 
+/** =================================================================
+ *  ================ p5JS function - Left click mouse ===============
+ *  ================================================================= */
 /* global mouseX, mouseY */
 function mousePressed() {
     // Click inside the map
@@ -237,6 +223,9 @@ function mousePressed() {
     
 }
 
+/** =================================================================
+ *  ================ p5JS function - Left drag mouse ================
+ *  ================================================================= */
 /* global mouseX, mouseY */
 function mouseDragged() {
     // Click inside the map
