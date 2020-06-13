@@ -148,6 +148,7 @@ function setup() {
     denseWallsProb = 0.8;
     movingStart = false;
     movingEnd = false;
+    background(180);
 }
 
 
@@ -158,11 +159,7 @@ function setup() {
  */
 
 function startPathfinding(){
-    if(currentPathfinding !== null){
-        pathfindingStatus = status.ACTIVE;
-    }
-    else
-        console.log('Error!\nSelect a pathfinding algorithm!\n');
+    
 }
 
 /** =================================================================
@@ -173,11 +170,11 @@ function draw() {
         // Pathfinding in progress
         currentPathfinding();
         updateMap();
+        console.log('1');
     }else if(mapChanged === true){
         // User interaction
         updateMap();
-        source.show(colorEnum.SOURCE);
-    target.show(colorEnum.TARGET);
+        console.log('2');
     }
     
 }

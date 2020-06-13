@@ -1,153 +1,28 @@
 <!doctype html>
 <html lang="en">
     <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
         <title>Pathfinding Visualizer</title>
-        <meta name="description" content="">
+        <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="apple-touch-icon" href="apple-touch-icon.png">
-
-        <link rel="stylesheet" href="css/bootstrap.min.css">
-        <style>
-            body {
-                padding-top: 50px;
-                padding-bottom: 20px;
-            }
-        </style>
-        <link rel="stylesheet" href="css/bootstrap-theme.min.css">
-        <link rel="stylesheet" href="css/main.css">
-
-        <!--<script src="js/vendor/modernizr-2.8.3-respond-1.4.2.min.js"></script>-->
-    </head>
-    
-    
-    
-    
-    <body>
-        <nav class="navbar navbar-inverse navbar-fixed-top">
-            <div class="container-fluid">
-                <!-- Brand -->
-                <div class="navbar-header">
-                  <a class="navbar-brand" href="index.html">Pathfinding Visualizer</a>
-                </div>
-                
-                <!-- Contents -->
-                <ul class="nav navbar-nav">
-                    
-                    <!-- Maze Dropdown -->
-                    <li class="dropdown">
-                        <a class="dropdown-toggle"
-                            data-toggle="dropdown"
-                            href="#">
-                            Maze
-                            <span class="caret"></span>
-                        </a>
-                        <ul class="dropdown-menu">
-                            <li>
-                                <a onclick="generateMaze('Recursive')" href="#">
-                                    Recursive Division
-                                </a>
-                            </li>
-                            <li>
-                                <a onclick="generateMaze('Random')" href="#">
-                                    Basic Random Maze
-                                </a>
-                            </li>
-                            <li>
-                                <a onclick="generateMaze('Hello')" href="#">
-                                    Hello! Maze
-                                </a>
-                            </li>
-                        </ul>
-                    </li>
-                    
-                    <!-- CellType Dropdown -->
-                    <li class="dropdown">
-                        <a class="dropdown-toggle"
-                            data-toggle="dropdown"
-                            href="#">
-                            Cell
-                            <span class="caret"></span>
-                        </a>
-                        <ul class="dropdown-menu">
-                            <li><a onclick="setTypeCell('Wall')" href="#">Wall</a></li>
-                            <li><a onclick="setTypeCell('TallGrass')" href="#">Tall Grass</a></li>
-                            <li><a onclick="setTypeCell('Mug')" href="#">Mug</a></li>
-                            <li><a onclick="setTypeCell('Water')" href="#">Water</a></li>
-                        </ul>
-                    </li>
-                    
-                    <!-- Algorithm Dropdown -->
-                    <li class="dropdown">
-                        <a class="dropdown-toggle"
-                            data-toggle="dropdown"
-                            href="#">
-                            Algorithm
-                            <span class="caret"></span>
-                        </a>
-                        <ul class="dropdown-menu"
-                            id="Algorithm">
-                            <li><a onclick="setAlgorithm('A*')" href="#">A*</a></li>
-                            <!--<li><a onclick="setAlgorithm('Bidirectional A*')" href="#">Bidirectional A*</a></li>-->
-                            <li><a onclick="setAlgorithm('Dijkstra')" href="#">Dijkstra</a></li>
-                            <li><a onclick="setAlgorithm('BFS')" href="#">Breadth-First Search</a></li>
-                            <li><a onclick="setAlgorithm('DFS')" href="#">Depth-First Search</a></li>
-                        </ul>
-                    </li>
-                    
-                    <li class="dropdown" id="HeuristicsDropdown">
-                        <a class="dropdown-toggle"
-                            data-toggle="dropdown"
-                            href="#">
-                            Heuristic
-                            <span class="caret"></span>
-                        </a>
-                        <ul class="dropdown-menu"
-                            id="Heuristics">
-                            <li><a onclick="setHeuristic('Manhattan')" href="#">Manhattan (default)</a></li>
-                            <li><a onclick="setHeuristic('Euclidean')" href="#">Euclidean</a></li>
-                            <li><a onclick="setHeuristic('Chebychev')" href="#">Chebychev</a></li>
-                        </ul>
-                    </li>
-                    
-                    <!-- Speed Dropdown -->
-                    <li class="dropdown">
-                        <a class="dropdown-toggle"
-                            data-toggle="dropdown"
-                            href="#">
-                            Speed
-                            <span class="caret"></span>
-                        </a>
-                        <ul class="dropdown-menu">
-                            <li><a href="#">Fast</a></li>
-                            <li><a href="#">Medium</a></li>
-                            <li><a href="#">Slow</a></li>
-                        </ul>
-                    </li>
-                </ul>
-                
-                <div class="btn-group">
-                    <button onclick="startPathfinding()" class="btn btn-primary navbar-btn">Run!</button>
-                    <button onclick="resetAlgo()" class="btn btn-seconday navbar-btn">Clear Algorithm</button>
-                    <button onclick="resetAll()" class="btn btn-seconday navbar-btn">Clear Map</button>
-                </div>
-                
-                
-            </div>
         
-        </nav>
+        <!-- LIBRARIES -->
         
-        <!-- JS/Bootstrap Import -->
-        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
-        <script>window.jQuery || document.write('<script src="vendor/jquery-1.11.2.min.js"><\/script>')</script>
-        <script src="vendor/bootstrap.min.js"></script>
+        <!-- Latest Bootstrap libraries, dependecies and minified CSS -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+        <!-- jQuery library -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <!-- Popper JS -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+        <!-- Latest compiled JavaScript -->
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+        <!-- Icons -->
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css">
         
         <!-- Processing Import -->
         <script src="p5/p5.js"></script>
         <script src="p5/p5.sound.js"></script>
         
-        <!-- My stuff -->
+        <!-- MY STUFF -->
         <script src="js/sketch.js"></script>
         <!-- entities -->
         <script src="js/entities/node.js"></script>
@@ -175,9 +50,92 @@
         <script src="js/utils/stack.js"></script>
         <!-- visualizers -->
         <script src="js/visualizers/visualizeMap.js"></script>
-        <script src="js/visualizers/visualizePath.js"></script> -->
+        <script src="js/visualizers/visualizePath.js"></script>
+    </head>
+    
+    
+    
+    
+    <body>
+        <nav class="navbar navbar-expand-sm bg-primary navbar-dark">
+            
+            <!-- Links -->
+            <a class="navbar-brand" href="index.html">
+                Pathfinding Visualizer
+            </a>
+            
+            <!-- Links -->
+            <ul class="navbar-nav">
+
+                <!-- Maze Dropdown -->
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+                        Maze
+                    </a>
+                    <div class="dropdown-menu">
+                        <a onclick="generateMaze('Recursive')" class="dropdown-item" href="#">Recursive Division</a>
+                        <a onclick="generateMaze('Random')" class="dropdown-item" href="#">Basic Random</a>
+                        <a onclick="generateMaze('Hello')" class="dropdown-item" href="#">Hello Maze!</a>
+                    </div>
+                </li>
+                
+                <!-- Custom Cell Dropdown -->
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+                        Custom Cell
+                    </a>
+                    <div class="dropdown-menu">
+                        <a onclick="setTypeCell('Wall')" class="dropdown-item" href="#">Wall</a>
+                        <a onclick="setTypeCell('TallGrass')" class="dropdown-item" href="#">Tall Grass</a>
+                        <a onclick="setTypeCell('Mug')" class="dropdown-item" href="#">Mug</a>
+                        <a onclick="setTypeCell('Water')" class="dropdown-item" href="#">Water</a>
+                    </div>
+                </li>
+                
+                <!-- Algorithm Dropdown -->
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+                        Algorithm
+                    </a>
+                    <div class="dropdown-menu">
+                        <a onclick="setAlgorithm('A*_1')" class="dropdown-item" href="#">A* (Manhattan)</a>
+                        <a onclick="setAlgorithm('A*_2')" class="dropdown-item" href="#">A* (Euclidean)</a>
+                        <a onclick="setAlgorithm('A*_3')" class="dropdown-item" href="#">A* (Chebychev)</a>
+                        <a onclick="setAlgorithm('Dijkstra')" class="dropdown-item" href="#">Dijkstra's Algorithm</a>
+                        <a onclick="setAlgorithm('BFS')" class="dropdown-item" href="#">Breadth-First Search</a>
+                        <a onclick="setAlgorithm('DFS')" class="dropdown-item" href="#">Depth-First Search</a>
+                    </div>
+                </li>
+                
+                <!-- Speed Dropdown -->
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+                        Speed
+                    </a>
+                    <div class="dropdown-menu">
+                        <a class="dropdown-item" href="#">Fast</a>
+                        <a class="dropdown-item" href="#">Medium</a>
+                        <a class="dropdown-item" href="#">Slow</a>
+                    </div>
+                </li>
+                
+            </ul>
+            
+                <button onclick="startPathfinding()"
+                    class="btn btn-primary navbar-btn fa fa-pause disabled"
+                    id="PauseButton">
+                </button>
+
+                <button onclick="resetAlgo()"
+                    class="btn btn-primary navbar-btn fa fa-stop disabled"
+                    id="StopButton">    
+                </button>
+
+                <button onclick="resetAll()"
+                    class="btn btn-primary navbar-btn fa fa-trash">
+                </button>
         
-        <span>Choose a maze, or generate on your own, and solve it!</span> <br>
+        </nav>
         
         <!-- Footer -->
         <footer class="footer">

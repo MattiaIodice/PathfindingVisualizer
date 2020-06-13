@@ -9,21 +9,21 @@
 
 
 function updateMap(){
-    // Refresh map
-    background(180);
     
-    visualizeGrid();
-    
-    if(algorithmInProgress === 'Traversal'){
-        visualizeShortestPathAlgo();
-    }else if(algorithmInProgress === 'Shortest'){
-        color.forEach(visualizeTraversalAlgo);
-    }
-
-    if(pathfindingStatus === status.SUCCESS){
+    if(pathfindingStatus === status.ACTIVE){
+        console.log('Algorithm in ACTIVE');
+        
+        if(algorithmInProgress === 'Traversal'){
+            color.forEach(visualizeTraversalAlgo);
+        }else if(algorithmInProgress === 'Shortest'){
+            visualizeShortestPathAlgo();
+        }
+        
+    }else if(pathfindingStatus === status.SUCCESS){
         console.log("The shortest path distance is " + target.g);
 
         visualizePathSourceTarget();
+        
 
         // Reset pathfindings status
         pathfindingStatus = status.DEACTIVE;
@@ -32,10 +32,11 @@ function updateMap(){
 
         // Reset pathfindings status
         pathfindingStatus = status.DEACTIVE;
+    }else{
+        visualizeGrid();
     }
 
     mapChanged = false;
-    
     source.show(colorEnum.SOURCE);
     target.show(colorEnum.TARGET);
 }
@@ -109,34 +110,4 @@ function visualizeShortestPathAlgo(){
         else if(closedSet[i].additionalEdgeValue === cellEnum.WATER)
             closedSet[i].show(colorEnum.DARKBLUE);
     }
-}
-
-function updateMap(){
-    // Refresh map
-    background(180);
-    
-    visualizeGrid();
-    
-    if(algorithmInProgress === 'Traversal'){
-        visualizeShortestPathAlgo();
-    }else if(algorithmInProgress === 'Shortest'){
-        color.forEach(visualizeTraversalAlgo);
-    }
-
-    if(pathfindingStatus === status.SUCCESS){
-        console.log("The shortest path distance is " + target.g);
-
-        visualizePathSourceTarget();
-
-        // Reset pathfindings status
-        pathfindingStatus = status.DEACTIVE;
-    }else if(pathfindingStatus === status.FAILURE){
-        console.log("There is not exist a path");
-
-        // Reset pathfindings status
-        pathfindingStatus = status.DEACTIVE;
-    }
-
-    mapChanged = false;
-    
 }

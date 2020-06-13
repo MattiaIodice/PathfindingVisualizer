@@ -54,7 +54,7 @@ function bfsStep(){
             }
         }
         
-        color.set(currAdj, 'b');
+        color.set(curr, 'b');
     }else{
         // FAILURE
         pathfindingStatus = status.FAILURE;

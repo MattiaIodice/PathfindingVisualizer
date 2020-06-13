@@ -6,25 +6,46 @@
 
 function setAlgorithm(type){
     
-    if(type === 'A*'){
-        // If the heuristic is not set
-        if(currentHeuristicFunc === heuristicEnum.NONE)
-            // Set Manhattan as default
-            currentHeuristicFunc = heuristicEnum.MANHATTAN;
+    pathfindingStatus = status.ACTIVE;
+    
+    document.getElementById('PauseButton').classList.remove("disabled");
+    document.getElementById('StopButton').classList.remove("disabled");
+    
+    if(type === 'A*_1'){
+        currentHeuristicFunc = heuristicEnum.MANHATTAN;
         
-        document.getElementById('HeuristicsDropdown').classList.remove("disabled");
+        // A* (Manhattan)
+        aStarInit();
+        currentPathfinding = function(){
+            return aStarStep();
+        }; 
+    }
+    
+    else if(type === 'A*_2'){
+        currentHeuristicFunc = heuristicEnum.EUCLIDEAN;
         
-        // A*
+        // A* (Euclidean)
         aStarInit();
         currentPathfinding = function(){
             return aStarStep();
         };
         
          
-    }else if(type === 'Dijkstra'){
+    }
+    
+    else if(type === 'A*_3'){
+        currentHeuristicFunc = heuristicEnum.CHEBYCHEV;
+        
+        // A* (Manhattan)
+        aStarInit();
+        currentPathfinding = function(){
+            return aStarStep();
+        }; 
+    }
+    
+    else if(type === 'Dijkstra'){
         // No heuristic
         currentHeuristicFunc = heuristicEnum.NONE;
-        document.getElementById('HeuristicsDropdown').classList.add("disabled");
         
         // Dijkstra
         aStarInit();
@@ -34,12 +55,12 @@ function setAlgorithm(type){
         
         
         
-    }else if(type === 'BFS'){
+    }
+    
+    else if(type === 'BFS'){
         // No heuristic
         currentHeuristicFunc = heuristicEnum.NONE;
-        document.getElementById('HeuristicsDropdown').classList.add("disabled");
         
-        console.log('Choose BFS');
         bfsInit();
         currentPathfinding = function(){
             return bfsStep();
@@ -49,9 +70,7 @@ function setAlgorithm(type){
     }else if(type === 'DFS'){
         // No heuristic
         currentHeuristicFunc = heuristicEnum.NONE;
-        document.getElementById('HeuristicsDropdown').classList.add("disabled");
         
-        console.log('Choose DFS');
         dfsInit();
         currentPathfinding = function(){
             return dfsStep();
