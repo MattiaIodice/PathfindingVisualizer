@@ -18,6 +18,8 @@
         <!-- Icons -->
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css">
         
+        <link rel="stylesheet" href="css/main.css">
+        
         <!-- Processing Import -->
         <script src="p5/p5.js"></script>
         <script src="p5/p5.sound.js"></script>
@@ -74,7 +76,8 @@
                     </a>
                     <div class="dropdown-menu">
                         <a onclick="generateMaze('Recursive')" class="dropdown-item" href="#">Recursive Division</a>
-                        <a onclick="generateMaze('Random')" class="dropdown-item" href="#">Basic Random</a>
+                        <a onclick="generateMaze('Random')" class="dropdown-item" href="#">Sparse Random</a>
+                        <a onclick="generateMaze('Dense')" class="dropdown-item" href="#">Dense Random</a>
                         <a onclick="generateMaze('Hello')" class="dropdown-item" href="#">Hello Maze!</a>
                     </div>
                 </li>
@@ -137,6 +140,30 @@
         
         </nav>
         
+        <div class="jumbotron">
+            <div class="row">
+                <div id="sketch-holder" class="col">
+                    <canvas id="default">
+                </div>
+                <div class="col">
+                    <div id="textblock">
+                        <h1 class="display-4"> Pathfinding Visualizer </h1>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        
+        <!--<div class="jumbotron">
+            <div id="sketch-holder">
+                <canvas id="default">
+            </div>
+            
+            <div id="textblock">
+                <h1 class="display-4"> Pathfinding Visualizer </h1>
+            </div>
+        </div>-->
+        
         <!-- Footer -->
         <footer class="footer">
 
@@ -154,14 +181,3 @@
     </body>
     
 </html>
-<style>
-    .footer {
-        position: fixed;
-        left: 0;
-        bottom: 0;
-        width: 100%;
-        background-color: lightgray;
-        color: grey;
-        text-align: center;
-    }
-</style>

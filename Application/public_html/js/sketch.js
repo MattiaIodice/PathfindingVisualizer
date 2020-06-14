@@ -114,7 +114,8 @@ function setup() {
     };
     console.log('CANVAS_WIDTH ' + CANVAS_WIDTH);
     console.log('CANVAS_HEIGHT ' + CANVAS_HEIGHT);
-    createCanvas(CANVAS_WIDTH, CANVAS_HEIGHT);
+    canvas = createCanvas(CANVAS_WIDTH, CANVAS_HEIGHT);
+    canvas.parent('sketch-holder');
     
     for(var i = 0; i < cols; i++)
         grid[i] = new Array(rows);
@@ -148,8 +149,15 @@ function setup() {
     denseWallsProb = 0.8;
     movingStart = false;
     movingEnd = false;
+    
+    
+    
     background(180);
 }
+
+/*function windowResized(){
+    resizeCanvas(1,1);
+}*/
 
 
 /** ====================== Draw function ======================

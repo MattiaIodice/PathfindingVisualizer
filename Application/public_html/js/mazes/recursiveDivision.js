@@ -1,10 +1,9 @@
 /* ---------------- Recursive Division Algorithm ----------------
- * This is a function created by Clement Mihailescu that I
- * changed to adapt to my application. I splitted it into two
- * different functions per side
+ *  Author: Clement Mihailescu (adapted by Mattia Iodice)
+ *  Info: Generate a maze with Recursive Division Algorithm
  * 
- * Author: Clement Mihailescu
- * Description: Generate a maze with Recursive Division Algorithm
+ * This is a function created by Clement Mihailescu that I
+ * changed to adapt to my application.
  */
 
 function recursiveDivision(grid, rows, cols, sideHorizontal){
@@ -53,15 +52,14 @@ function recursiveDivisionHorizontal(grid, rowStart, rowEnd, colStart, colEnd, s
     let randomColIndex = Math.floor(Math.random() * possibleCols.length);
     let currentRow = possibleRows[randomRowIndex];
     let colRandom = possibleCols[randomColIndex];
-    console.log("currentRow: " + currentRow +
-                ", colRandom: " + colRandom);
+    console.log("currentRow: " + currentRow + ", colRandom: " + colRandom);
     
     // Add line of walls
     for(let c = colStart-1; c <= colEnd+1; c++){
         if(c !== colRandom)
             grid[c][currentRow].additionalEdgeValue = -1;
     }
-    
+   
     // Divide in two and solve recursively
     if (currentRow - 2 - rowStart > colEnd - colStart) {
         recursiveDivisionHorizontal(grid, rowStart, currentRow - 2, colStart, colEnd, surroundingWalls);
@@ -98,8 +96,7 @@ function recursiveDivisionVertical(grid, rowStart, rowEnd, colStart, colEnd, sur
     let randomRowIndex = Math.floor(Math.random() * possibleRows.length);
     let currentCol = possibleCols[randomColIndex];
     let rowRandom = possibleRows[randomRowIndex];
-    console.log("currentCol: " + currentCol +
-                ", rowRandom: " + rowRandom);
+    console.log("currentCol: " + currentCol + ", rowRandom: " + rowRandom);
     
     // Add line of walls
     for(let r = rowStart-1; r <= rowEnd+1; r++){

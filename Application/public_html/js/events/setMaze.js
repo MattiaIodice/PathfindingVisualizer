@@ -15,13 +15,13 @@ function generateMaze(type){
         
     }else if(type === 'Random'){
         // Random Basic Maze
-        console.log("Basic Random Maze");
-        randomMaze(grid, cols, rows, 0.4, startX, startY, endX, endY);
+        console.log("Sparse Random Maze");
+        randomMaze(grid, cols, rows, 0.2, startX, startY, endX, endY);
 
-    }else if(type === 'Basic Dense'){
-        // Random Basic Maze (Dense)
-        console.log("Basic Random Maze (Dense)");
-        randomMaze(grid, cols, rows, 0.8, startX, startY, endX, endY);
+    }else if(type === 'Dense'){
+        // Basic Random Maze
+        console.log("Dense Random Maze");
+        randomMaze(grid, cols, rows, 0.4, startX, startY, endX, endY);
 
     }else{
         // Hello! Maze

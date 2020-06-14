@@ -1,22 +1,114 @@
-
-
-/* ==========================================================================
-   Author's custom styles
+/* =========================================================================
+                Some CSS to change the appeal of the application
    ========================================================================== */
 
+.footer {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    background-color: lightgray;
+    color: grey;
+    text-align: center;
+}
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+*{
+    box-sizing: border-box;
+}
+body{
+    margin:0;
+    padding:0;
+    overflow: auto;
+}
+/*
+.jumbotron{
+    padding-top: 20px;
+    padding-left: 20px;
+    padding-right: 20px;
+}*/
+.jumbotron hr{
+    width: 95%;
+}
+#sketch-holder{
+    margin-right: 20px;
+    float: left;
+}
+/*#sketch-holder canvas {
+    width: 50% !important;
+    height: auto !important;
+}
+#textblock{
+    padding-top: 40px;
+}*/
+#insert_text{
+    float: left;
+    width: 35%;
+}
+#help{
+    text-align: left;
+}
+.alert{
+    padding: .4rem 1.25rem;
+    margin-left: 10px;
+}
+.form-group{
+    /*width: 400px;*/
+}
+#complete{
+    float: left;
+    margin-left: 0;
+}
+#loadButtonDiv{
+    display: flex;
+    align-items: baseline;
+}
+#load{
+    flex: 1;
+    max-width: 25%
+}
+#loadAlert{
+    flex: 2;
+}
+@media (min-width: 320px) and (max-width: 1024px){
+    .display-4{
+        font-size: 6vW;
+    }
+    .lead{
+        font-size: 4vw;
+    }
+    #textblock p{
+        font-size: 4vw;   
+    }
+    .jumbotron{
+        width: 100%;
+        padding-top: 20px;
+        padding-left: 20px;
+        padding-right: 20px;
+    }
+    #sketch-holder{
+        width: 80%;
+        height: 80%;
+        margin-right: 0px;
+        padding: 10px 25px;
+        float: none;
+        margin: 0 auto;
+    }
+    #insert_text{
+        width: 80%;
+        float: left;
+        margin: 0px 20px;
+        margin-bottom: 20px;
+    }
+    #loadButtonDiv{
+        flex-direction: column;
+        align-items: center;
+    }
+    #load{
+        flex: 1;
+        max-width: none;
+    }
+    #loadAlert{
+        margin: 10px auto;
+        flex: 1;
+    }
+}
