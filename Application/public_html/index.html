@@ -142,13 +142,46 @@
         
         <div class="jumbotron">
             <div class="row">
-                <div id="sketch-holder" class="col">
-                    <canvas id="default">
-                </div>
+                <div id="sketch-holder" class="col"></div>
                 <div class="col">
                     <div id="textblock">
-                        <h1 class="display-4"> Pathfinding Visualizer </h1>
-                        Some text as part of a unique textblock
+                        <!--<h1 class="display-4"> Visualize a pathfinding algorithm! </h1>-->
+                        
+                        <h1 class="display-4"> Legend </h1>
+                        
+                        <div class="row">
+                            <div class="col-sm-1"><div style="width:20px;height:20px;background-color: #555;margin-top: 3px"></div></div>
+                            <div class="col-sm-3">Source</div>
+                            <div class="col-sm-1"><div style="width:20px;height:20px;background-color: #555;margin-top: 3px"></div></div>
+                            <div class="col-sm-3">Target</div>
+                            <div class="col-sm-1"><div style="width:20px;height:20px;background-color: #555;margin-top: 3px"></div></div>
+                            <div class="col-sm-3">Wall</div>
+                        </div>
+                        
+                        <div class="row">
+                            <div class="col-sm-1"><div style="width:20px;height:20px;background-color: #555;margin-top: 3px"></div></div>
+                            <div class="col-sm-3">Visited</div>
+                            <div class="col-sm-1"><div style="width:20px;height:20px;background-color: #555;margin-top: 3px"></div></div>
+                            <div class="col-sm-3">To visit</div>
+                            <div class="col-sm-1"><div style="width:20px;height:20px;background-color: #555;margin-top: 3px"></div></div>
+                            <div class="col-sm-3">Result</div>
+                        </div>
+                        
+                        <div class="row">
+                            <div class="col-sm-1"><div style="width:20px;height:20px;background-color: #555;margin-top: 3px"></div></div>
+                            <div class="col-sm-3">Tall grass</div>
+                            <div class="col-sm-1"><div style="width:20px;height:20px;background-color: #555;margin-top: 3px"></div></div>
+                            <div class="col-sm-3">Mug</div>
+                            <div class="col-sm-1"><div style="width:20px;height:20px;background-color: #555;margin-top: 3px"></div></div>
+                            <div class="col-sm-3">Water</div>
+                        </div>
+                        
+                        <br>
+                        
+                        <h1 class="display-4"> Info </h1>
+                        <div>Selected algorithm: <p>A*</p></div>
+                        <div>Selected speed: <p>Average</p></div>
+                        <div>Selected cell: <p>Wall</p></div>
                     </div>
                 </div>
             </div>
