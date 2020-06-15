@@ -1,23 +1,16 @@
-/* TODO Functions for event and change of velocity */
+/* ------------ Set velocity ------------
+ *  Author: Mattia Iodice
+ *  Info: Set the frameRate of Processing
+ */
 
-/* global velocity */
+/* global velocity, velocityEnum */
 
-function setVelocity(evt){
+function setVelocity(typeVelocity){
     // TODO It should be better with enum
-    if(evt.target.value === "Fast")
-        velocity = 0;
-    else if(evt.target.value === "Medium")
-        velocity = 1;
+    if(typeVelocity === 'Default')
+        velocity = velocityEnum.DEFAULT;
+    else if(typeVelocity === 'Slow')
+        velocity = velocityEnum.SLOW;
     else
-        velocity = 2;
-}
-
-function updateVelocity(){
-    if(velocity !== 3){ // Not fast
-        if(velocity === 1){ // Slow
-            setTimeout(4000);
-        }else{ // Medium
-            setTimeout(500);
-        }
-    }
+        velocity = velocityEnum.VERYSLOW;
 }

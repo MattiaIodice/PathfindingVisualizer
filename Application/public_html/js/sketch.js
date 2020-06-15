@@ -3,7 +3,6 @@
  *   Info: Pathfinding and maze-generation visualizer
  */
 
-// TODO Hanno senso tutti questi var scritti? Leggi documentazione!
 // Global variables
 
 // Size canvas
@@ -71,10 +70,15 @@ const cellEnum = {
     WATER:      4
 };
 var colorEnum;
-var pathfindingStatus;
+const velocityEnum = {
+    DEFAULT: 'default',
+    SLOW : 'slow',
+    VERYSLOW: 'veryslow'
+};
+var velocity;
 
-// Other
-var velocity = 0;
+
+var pathfindingStatus;
 
 // Map flag
 var mapChanged;
@@ -152,8 +156,6 @@ function setup() {
     denseWallsProb = 0.8;
     movingStart = false;
     movingEnd = false;
-    
-    
     
     background(180);
 }

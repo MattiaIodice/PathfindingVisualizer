@@ -5,7 +5,7 @@
 */
 
 
-/* global currentPathfinding, currentHeuristicFunc, heuristicEnum */
+/* global currentPathfinding, currentHeuristicFunc, heuristicEnum, velocity, velocityEnum */
 function setAlgorithm(type){
     
     pathfindingStatus = status.ACTIVE;
@@ -13,7 +13,16 @@ function setAlgorithm(type){
     document.getElementById('PauseButton').disabled = false;
     document.getElementById('StopButton').disabled = false;
     
+    if(velocity === velocityEnum.SLOW)
+        frameRate(20); // Slow
+    else if(velocity === velocityEnum.VERYSLOW)
+        frameRate(8); // Very slow
+    else
+        frameRate(60); // Average (Default)
+        
     
+        
+        
     
     if(type === 'A*_1'){
         // A* (Manhattan)
