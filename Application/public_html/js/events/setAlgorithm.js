@@ -1,75 +1,74 @@
-/* Set true the flag of algorithmInProcess and
- * set the function pointer to an algorithm
+/* ---------------- Set the pathfinding algorithm ----------------
+ *  Author: Mattia Iodice
+ *  Info: Set true the algorithmInProcess flag, set what
+ *  algorithm and the functions pointer realted to
 */
 
-/* global currentPathfinding, currentHeuristicFunc, heuristicEnum */
 
+/* global currentPathfinding, currentHeuristicFunc, heuristicEnum */
 function setAlgorithm(type){
     
     pathfindingStatus = status.ACTIVE;
     
-    document.getElementById('PauseButton').classList.remove("disabled");
-    document.getElementById('StopButton').classList.remove("disabled");
+    document.getElementById('PauseButton').disabled = false;
+    document.getElementById('StopButton').disabled = false;
+    
+    
     
     if(type === 'A*_1'){
+        // A* (Manhattan)
         currentHeuristicFunc = heuristicEnum.MANHATTAN;
+        algorithmInProgress = 'Shortest';
         
-        // A* (Manhattan)
         aStarInit();
         currentPathfinding = function(){
             return aStarStep();
-        }; 
-    }
+        };
     
-    else if(type === 'A*_2'){
-        currentHeuristicFunc = heuristicEnum.EUCLIDEAN;
-        
+    }else if(type === 'A*_2'){
         // A* (Euclidean)
+        currentHeuristicFunc = heuristicEnum.EUCLIDEAN;
+        algorithmInProgress = 'Shortest';
+        
         aStarInit();
         currentPathfinding = function(){
             return aStarStep();
         };
-        
-         
-    }
     
-    else if(type === 'A*_3'){
+    }else if(type === 'A*_3'){
+        // A* (Chebychev)
         currentHeuristicFunc = heuristicEnum.CHEBYCHEV;
+        algorithmInProgress = 'Shortest';
         
-        // A* (Manhattan)
         aStarInit();
         currentPathfinding = function(){
             return aStarStep();
         }; 
-    }
     
-    else if(type === 'Dijkstra'){
-        // No heuristic
+    }else if(type === 'Dijkstra'){
+        // Dijkstra (A* without heuristic)
         currentHeuristicFunc = heuristicEnum.NONE;
+        algorithmInProgress = 'Shortest';
         
-        // Dijkstra
         aStarInit();
         currentPathfinding = function(){
             return aStarStep();
         };
-        
-        
-        
-    }
     
-    else if(type === 'BFS'){
-        // No heuristic
+    }else if(type === 'BFS'){
+        // BFS (traversal)
         currentHeuristicFunc = heuristicEnum.NONE;
+        algorithmInProgress = 'Traversal';
         
         bfsInit();
         currentPathfinding = function(){
             return bfsStep();
         };
-        
-        
+    
     }else if(type === 'DFS'){
-        // No heuristic
+        // DFS (traversal)
         currentHeuristicFunc = heuristicEnum.NONE;
+        algorithmInProgress = 'Traversal';
         
         dfsInit();
         currentPathfinding = function(){

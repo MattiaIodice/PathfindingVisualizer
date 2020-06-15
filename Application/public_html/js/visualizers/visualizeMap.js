@@ -1,9 +1,7 @@
 /* ---------------- Visualize Map ----------------
  *  Author: Mattia Iodice
- *  Info:   Set of functions for showing algorithms and
- *          changes about the map
+ *  Info:   Set pathfinding visualization
  */
-
 
 /* global grid, cols, rows, openSet, closedSet, source, target, cellEnum, colorEnum, colors, algorithmInProgress */
 
@@ -11,34 +9,34 @@
 function updateMap(){
     
     if(pathfindingStatus === status.ACTIVE){
-        console.log('Algorithm in ACTIVE');
+        visualizeGrid();
         
         if(algorithmInProgress === 'Traversal'){
             color.forEach(visualizeTraversalAlgo);
         }else if(algorithmInProgress === 'Shortest'){
             visualizeShortestPathAlgo();
         }
-        
     }else if(pathfindingStatus === status.SUCCESS){
         console.log("The shortest path distance is " + target.g);
-
-        visualizePathSourceTarget();
         
-
-        // Reset pathfindings status
+        visualizePath(target);
+        
+        document.getElementById('PauseButton').disabled = true;
+        document.getElementById('StopButton').disabled = true;
         pathfindingStatus = status.DEACTIVE;
     }else if(pathfindingStatus === status.FAILURE){
-        console.log("There is not exist a path");
-
-        // Reset pathfindings status
+        console.log("There is not exist a path, I gotta show something!");
+        
+        document.getElementById('PauseButton').disabled = true;
+        document.getElementById('StopButton').disabled = true;
         pathfindingStatus = status.DEACTIVE;
     }else{
         visualizeGrid();
     }
-
-    mapChanged = false;
+    
     source.show(colorEnum.SOURCE);
     target.show(colorEnum.TARGET);
+    mapChanged = false;
 }
 
 function visualizeGrid(){

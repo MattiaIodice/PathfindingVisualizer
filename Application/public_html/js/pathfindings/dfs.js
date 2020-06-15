@@ -4,13 +4,16 @@
  */
 
 
-/* global grid, rows, cols, source, currentPathfinding */
+/* -------- Initialize DFS --------
+ * Info:    Init queue (Queue) --> To visit
+ *               color (Map)   --> Node to String (i.e. color)
+ */
+
+/* global grid, rows, cols, source, currentPathfinding, Infinity, queue, color, target */
 function dfsInit(){
-    
     // Init openSet (Stack) and colored (Array of colors)
-    openSet = [];
-    openSet.push(source);
-    colored = new Map();
+    resetAlgo();
+    
     
     // Recalculate neighbors
     // TODO Inefficient, I could call the
@@ -20,17 +23,21 @@ function dfsInit(){
     
     for(let i = 0; i < cols; i++){
         for(let j = 0; j < rows; j++){
+            color.set(grid[i][j], 'w');
             grid[i][j].predecessor = null;
             grid[i][j].g = Infinity;
         }
     }
     
+    
+    stack.push(source);
+    color.set(source, 'g');
     source.g = 0;
 }
 
 function dfsStep(){
-    if(openSet.length > 0){
-        curr = openSet.pop();
+    if(stack.length > 0){
+        curr = stack.pop();
         
         if(curr === target){
             // SUCCESS
@@ -40,9 +47,9 @@ function dfsStep(){
             for(let i = 0; i < adjacents.length; i++){
                 let currAdj = adjacents[i];
                 
-                if(!colored.get(currAdj)){
-                    colored.set(currAdj, true);
-                    openSet.push(currAdj);
+                if(color.get(currAdj) === 'w'){
+                    color.set(currAdj, 'g');
+                    stack.push(currAdj);
                     currAdj.g = curr.g+1;
                     currAdj.predecessor = curr;
                 }
@@ -50,7 +57,7 @@ function dfsStep(){
             }
         }
         
-        colored.set(curr, true);
+        color.set(curr, 'b');
     }else{
         // FAILURE
         pathfindingStatus = status.FAILURE;

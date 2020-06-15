@@ -15,11 +15,11 @@ var cols = 24;
 // Weight and height of a grid cell
 var wCell = CANVAS_WIDTH / cols;
 var hCell = CANVAS_HEIGHT / rows;
-// Start point position
+// Source info
 var startX = 1;
 var startY = 1;
 var source;
-// End point position
+// Target info
 var endX = rows-2;
 var endY = cols-2;
 var target;
@@ -31,22 +31,24 @@ var currentHeuristicFunc;
 var currentPathfinding;
 var currentMaze;
 
-// Pathfinding
+// Pathfinding Data Structures
 var openSet;            // For A* and Dijkstra, i.e. Q
 var closedSet;          // For A* and Dijkstra, i.e. V \ Q
 var color;              // For BFS and DFS
-var queue;              // For BFS and DFS
-//var pred = new Map();       // Shortest path
-var algorithmInProgress;
+var queue;              // For BFS
+var stack;              // For DFS
 
 // Pathfindings status
 const status = {
+    // Set Enum for strings
     DEACTIVE: 'deactive',
     ACTIVE: 'inprocess',
     SUCCESS: 'success',
     FAILURE: 'failure'
 };
+var algorithmInProgress;
 const heuristicEnum = {
+    // Set Enum for functions
     MANHATTAN:  function(a,b){
                     return Math.abs(a.i-b.i) + Math.abs(a.j-b.j);
                 },
@@ -61,11 +63,12 @@ const heuristicEnum = {
                 }
 };
 const cellEnum = {
+    // Set Enum for weights
     WALL:      -1,
     PASSAGE:    0,
     TALLGRASS:  1,
-    MUG:        2,
-    WATER:      3
+    MUG:        3,
+    WATER:      4
 };
 var colorEnum;
 var pathfindingStatus;
@@ -153,21 +156,6 @@ function setup() {
     
     
     background(180);
-}
-
-/*function windowResized(){
-    resizeCanvas(1,1);
-}*/
-
-
-/** ====================== Draw function ======================
- *  draw function of p5.js
- *  It alternates one step of A* with one of draw
- * @returns {undefined}
- */
-
-function startPathfinding(){
-    
 }
 
 /** =================================================================

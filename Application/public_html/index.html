@@ -5,24 +5,25 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         
-        <!-- LIBRARIES -->
-        
-        <!-- Latest Bootstrap libraries, dependecies and minified CSS -->
+        <!-- Bootstrap 4 CSS -->
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
-        <!-- jQuery library -->
+        <!-- jQuery (for Bootstrap 4) -->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-        <!-- Popper JS -->
+        <!-- Popper JS (for Bootstrap 4) -->
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-        <!-- Latest compiled JavaScript -->
+        <!-- Bootstrap 4 -->
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
-        <!-- Icons -->
+        <!-- Icons (for Bootstrap 4) -->
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css">
         
-        <link rel="stylesheet" href="css/main.css">
-        
-        <!-- Processing Import -->
+        <!-- Processing -->
         <script src="p5/p5.js"></script>
         <script src="p5/p5.sound.js"></script>
+        
+        <!-- Personal CSS -->
+        <link rel="stylesheet" href="css/main.css">
+        
+        
         
         <!-- MY STUFF -->
         <script src="js/sketch.js"></script>
@@ -85,7 +86,7 @@
                 <!-- Custom Cell Dropdown -->
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
-                        Custom Cell
+                        Cell
                     </a>
                     <div class="dropdown-menu">
                         <a onclick="setTypeCell('Wall')" class="dropdown-item" href="#">Wall</a>
@@ -124,19 +125,19 @@
                 
             </ul>
             
-                <button onclick="startPathfinding()"
-                    class="btn btn-primary navbar-btn fa fa-pause disabled"
-                    id="PauseButton">
-                </button>
+            <button onclick="startPathfinding()"
+                class="btn btn-primary navbar-btn fa fa-pause"
+                id="PauseButton" disabled>
+            </button>
 
-                <button onclick="resetAlgo()"
-                    class="btn btn-primary navbar-btn fa fa-stop disabled"
-                    id="StopButton">    
-                </button>
+            <button onclick="resetAlgo()"
+                class="btn btn-primary navbar-btn fa fa-stop"
+                id="StopButton" disabled>    
+            </button>
 
-                <button onclick="resetAll()"
-                    class="btn btn-primary navbar-btn fa fa-trash">
-                </button>
+            <button onclick="resetAll()"
+                class="btn btn-primary navbar-btn fa fa-trash">
+            </button>
         
         </nav>
         
@@ -148,21 +149,11 @@
                 <div class="col">
                     <div id="textblock">
                         <h1 class="display-4"> Pathfinding Visualizer </h1>
+                        Some text as part of a unique textblock
                     </div>
                 </div>
             </div>
         </div>
-        
-        
-        <!--<div class="jumbotron">
-            <div id="sketch-holder">
-                <canvas id="default">
-            </div>
-            
-            <div id="textblock">
-                <h1 class="display-4"> Pathfinding Visualizer </h1>
-            </div>
-        </div>-->
         
         <!-- Footer -->
         <footer class="footer">

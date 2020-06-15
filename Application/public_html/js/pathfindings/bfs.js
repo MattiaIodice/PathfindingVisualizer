@@ -9,10 +9,9 @@
  *               color (Map)   --> Node to String (i.e. color)
  */
 
-/* global grid, rows, cols, source, target, queue, color, Infinity, algorithmInProgress */
+/* global grid, rows, cols, source, target, queue, color, Infinity */
 function bfsInit(){
     resetAlgo();
-    algorithmInProgress = 'Traversal';
     
     // Recalculate neighbors
     // TODO Inefficient, I could call the update of neighbors
