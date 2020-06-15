@@ -1,3 +1,5 @@
+/* TODO Functions for event and change of velocity */
+
 /* global velocity */
 
 function setVelocity(evt){
@@ -8,4 +10,14 @@ function setVelocity(evt){
         velocity = 1;
     else
         velocity = 2;
+}
+
+function updateVelocity(){
+    if(velocity !== 3){ // Not fast
+        if(velocity === 1){ // Slow
+            setTimeout(4000);
+        }else{ // Medium
+            setTimeout(500);
+        }
+    }
 }

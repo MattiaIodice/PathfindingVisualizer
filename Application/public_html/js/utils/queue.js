@@ -1,6 +1,6 @@
-/* ---------------- Queue ----------------
+/* ---------------- Priiority Queue ----------------
  * Author: Mattia Iodice
- * Info: A util class for the queue
+ * Info: Util class for the min heap data structure
  */
 
 
