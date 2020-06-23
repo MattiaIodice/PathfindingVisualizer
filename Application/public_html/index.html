@@ -31,12 +31,14 @@
         <script src="js/entities/node.js"></script>
         <!-- events -->
         <script src="js/events/resetAlgo.js"></script>
-        <script src="js/events/resetAll.js"></script>
         <script src="js/events/setAlgorithm.js"></script>
         <script src="js/events/setMaze.js"></script>
         <script src="js/events/setTypeCell.js"></script>
         <script src="js/events/setVelocity.js"></script>
         <script src="js/events/updateVelocity.js"></script>
+        <script src="js/events/startAndPauseButtonEvent.js"></script>
+        <script src="js/events/stopButtonEvent.js"></script>
+        <script src="js/events/resetButtonEvent.js"></script>
         <!-- mazes -->
         <script src="js/mazes/helloMaze.js"></script>
         <script src="js/mazes/randomMaze.js"></script>
@@ -71,11 +73,11 @@
 
                 <!-- Maze Dropdown -->
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown" onclick="disableMap()">
                         Maze
                     </a>
                     <div class="dropdown-menu">
-                        <a onclick="generateMaze('Recursive')" class="dropdown-item" href="#">Recursive Division</a>
+                        <!--<a onclick="generateMaze('Recursive')" class="dropdown-item" href="#">Recursive Division</a>-->
                         <a onclick="generateMaze('Random')" class="dropdown-item" href="#">Sparse Random</a>
                         <a onclick="generateMaze('Dense')" class="dropdown-item" href="#">Dense Random</a>
                         <a onclick="generateMaze('Hello')" class="dropdown-item" href="#">Hello Maze!</a>
@@ -84,7 +86,7 @@
                 
                 <!-- Custom Cell Dropdown -->
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown" onclick="disableMap()">
                         Cell
                     </a>
                     <div class="dropdown-menu">
@@ -97,7 +99,7 @@
                 
                 <!-- Algorithm Dropdown -->
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown" onclick="disableMap()">
                         Algorithm
                     </a>
                     <div class="dropdown-menu">
@@ -112,11 +114,11 @@
                 
                 <!-- Speed Dropdown -->
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown" onclick="disableMap()">
                         Speed
                     </a>
                     <div class="dropdown-menu">
-                        <a onclick="setVelocity('Default')" class="dropdown-item" href="#">Average (Default)</a>
+                        <a onclick="setVelocity('Default')" class="dropdown-item" href="#">Normal (Default)</a>
                         <a onclick="setVelocity('Slow')" class="dropdown-item" href="#">Slow</a>
                         <a onclick="setVelocity('VerySlow')" class="dropdown-item" href="#">Very slow</a>
                     </div>
@@ -124,64 +126,81 @@
                 
             </ul>
             
-            <button onclick="startPathfinding()"
+            <button onclick="startAndPauseButtonEvent()"
                 class="btn btn-primary navbar-btn fa fa-pause"
                 id="PauseButton" disabled>
             </button>
 
-            <button onclick="resetAlgo()"
+            <button onclick="stopButtonEvent()"
                 class="btn btn-primary navbar-btn fa fa-stop"
                 id="StopButton" disabled>    
             </button>
 
-            <button onclick="resetAll()"
+            <button onclick="resetButtonEvent()"
                 class="btn btn-primary navbar-btn fa fa-trash">
             </button>
         
         </nav>
         
         <div class="jumbotron">
-            <div class="row">
-                <div id="sketch-holder" class="col"></div>
-                <div class="col">
-                    <div id="textblock">
-                        <!--<h1 class="display-4"> Visualize a pathfinding algorithm! </h1>-->
-                        
-                        <h1 class="display-4"> Legend </h1>
-                        
-                        <div class="row">
-                            <div class="col-sm-1"><div style="width:20px;height:20px;background-color: #555;margin-top: 3px"></div></div>
-                            <div class="col-sm-3">Source</div>
-                            <div class="col-sm-1"><div style="width:20px;height:20px;background-color: #555;margin-top: 3px"></div></div>
-                            <div class="col-sm-3">Target</div>
-                            <div class="col-sm-1"><div style="width:20px;height:20px;background-color: #555;margin-top: 3px"></div></div>
-                            <div class="col-sm-3">Wall</div>
+            <div class="container mt-3">
+                <div class="row">
+                    <!-- Processing -->
+                    <div id="sketch-holder" class="col-xl-6"></div>
+                    
+                    <!-- Information -->
+                    <div class="col-xl-6">
+                        <div id="textblock">
+                            <h1 class="display-4">Legend</h1>
+                            
+                            <div class="row">
+                                <!-- Row of basic information -->
+                                <div class="col-sm-1"><div style="width:20px;height:20px;background-color: rgb(0, 0, 255);margin-top: 3px"></div></div>
+                                <div class="col-sm-3">Source</div>
+                                <div class="col-sm-1"><div style="width:20px;height:20px;background-color: rgb(255, 0, 255);margin-top: 3px"></div></div>
+                                <div class="col-sm-3">Target</div>
+                                <div class="col-sm-1"><div style="width:20px;height:20px;background-color: rgb(0, 0, 0);margin-top: 3px"></div></div>
+                                <div class="col-sm-3">Wall</div>
+                            </div>
+
+                            <div class="row">
+                                <!-- Row of algorithm colors -->
+                                <div class="col-sm-1"><div style="width:20px;height:20px;background-color: rgb(70, 70, 70);margin-top: 3px"></div></div>
+                                <div class="col-sm-3">Visited</div>
+                                <div class="col-sm-1"><div style="width:20px;height:20px;background-color: rgb(255, 119, 0);margin-top: 3px"></div></div>
+                                <div class="col-sm-3">To visit</div>
+                                <div class="col-sm-1"><div style="width:20px;height:20px;background-color: rgb(255, 255, 0);margin-top: 3px"></div></div>
+                                <div class="col-sm-3">Path</div>
+                            </div>
+
+                            <div class="row">
+                                <!-- Row of cell modifiers -->
+                                <div class="col-sm-1"><div style="width:20px;height:20px;background-color: rgb(0, 135, 0);margin-top: 3px"></div></div>
+                                <div class="col-sm-3">Tall grass</div>
+                                <div class="col-sm-1"><div style="width:20px;height:20px;background-color: rgb(173, 81, 0);margin-top: 3px"></div></div>
+                                <div class="col-sm-3">Mug</div>
+                                <div class="col-sm-1"><div style="width:20px;height:20px;background-color: rgb(0, 135, 131);margin-top: 3px"></div></div>
+                                <div class="col-sm-3">Water</div>
+                            </div>
+
+                            <br>
+
+                            <div class="row">
+                                <!-- Column of Information -->
+                                <div class="col">
+                                    <h1 class="display-4">Info</h1>
+                                    <div>Left-click cell: <p id="currentWall">Wall</p></div>
+                                    <div>Selected algorithm: <p id="currentAlgorithm"><b>None</b></p></div>
+                                    <div>Selected speed: <p id="currentSpeed"><b>Normal</b></p></div>
+                                </div>
+
+                                <!-- Column of Results -->
+                                <div class="col">
+                                    <h1 class="display-4">Results</h1>
+                                    <div id="resultText">None</div>
+                                </div>
+                            </div>
                         </div>
-                        
-                        <div class="row">
-                            <div class="col-sm-1"><div style="width:20px;height:20px;background-color: #555;margin-top: 3px"></div></div>
-                            <div class="col-sm-3">Visited</div>
-                            <div class="col-sm-1"><div style="width:20px;height:20px;background-color: #555;margin-top: 3px"></div></div>
-                            <div class="col-sm-3">To visit</div>
-                            <div class="col-sm-1"><div style="width:20px;height:20px;background-color: #555;margin-top: 3px"></div></div>
-                            <div class="col-sm-3">Result</div>
-                        </div>
-                        
-                        <div class="row">
-                            <div class="col-sm-1"><div style="width:20px;height:20px;background-color: #555;margin-top: 3px"></div></div>
-                            <div class="col-sm-3">Tall grass</div>
-                            <div class="col-sm-1"><div style="width:20px;height:20px;background-color: #555;margin-top: 3px"></div></div>
-                            <div class="col-sm-3">Mug</div>
-                            <div class="col-sm-1"><div style="width:20px;height:20px;background-color: #555;margin-top: 3px"></div></div>
-                            <div class="col-sm-3">Water</div>
-                        </div>
-                        
-                        <br>
-                        
-                        <h1 class="display-4"> Info </h1>
-                        <div>Selected algorithm: <p>A*</p></div>
-                        <div>Selected speed: <p>Average</p></div>
-                        <div>Selected cell: <p>Wall</p></div>
                     </div>
                 </div>
             </div>
@@ -190,7 +209,6 @@
         <!-- Footer -->
         <footer class="footer">
 
-          <!-- Copyright -->
           <div>© 2020 Author:
             <a href="https://www.mattiaiodice.com/"> Mattia Iodice</a>
           </div>

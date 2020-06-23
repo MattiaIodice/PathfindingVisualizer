@@ -42,6 +42,7 @@ const status = {
     // Set Enum for strings
     DEACTIVE: 'deactive',
     ACTIVE: 'inprocess',
+    PAUSE: 'pause',
     SUCCESS: 'success',
     FAILURE: 'failure'
 };
@@ -168,21 +169,30 @@ function draw() {
         // Pathfinding in progress
         currentPathfinding();
         updateMap();
-        console.log('1');
+        console.log('status = ACTIVE');
     }else if(mapChanged === true){
         // User interaction
         updateMap();
-        console.log('2');
+        console.log('status = UI');
+    }else if(pathfindingStatus === status.PAUSE){
+        console.log('status = PAUSE');
     }
     
 }
 
+
+navbarFlag = false;
 /** =================================================================
  *  ================ p5JS function - Left click mouse ===============
  *  ================================================================= */
 /* global mouseX, mouseY */
 function mousePressed() {
     // Click inside the map
+    if(navbarFlag === true){
+        navbarFlag = false;
+        return;
+    }
+    
     if(mouseX >= 0 && mouseX < CANVAS_WIDTH && mouseY >= 0 && mouseY < CANVAS_HEIGHT){
         // If there is not an algorithm in process
         if(pathfindingStatus === status.DEACTIVE){            
@@ -262,3 +272,26 @@ function mouseDragged() {
         }
     }
 }
+
+function startAndPauseButtonEvent(){
+    let element = document.getElementById("startAndPause");
+    if(pathfindingStatus === status.ACTIVE){
+        element.className = "btn btn-primary navbar-btn fa fa-play";
+        pathfindingStatus = status.PAUSE;
+    }else{
+        element.className = "btn btn-primary navbar-btn fa fa-pause";
+        pathfindingStatus = status.ACTIVE;
+    }
+}
+
+function stopButtonEvent(){
+    pathfindingStatus = status.DEACTIVE;
+    resetAlgo();
+}
+
+
+function disableMap(){
+    console.log('Unable navbar');
+    navbarFlag = true;
+}
+
