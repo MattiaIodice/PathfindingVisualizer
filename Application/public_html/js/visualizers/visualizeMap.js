@@ -3,7 +3,8 @@
  *  Info:   Set pathfinding visualization
  */
 
-/* global grid, cols, rows, openSet, closedSet, source, target, cellEnum, colorEnum, colors, algorithmInProgress */
+/* global grid, cols, rows, openSet, closedSet, source, target,
+ *        cellEnum, colorEnum, colors, algorithmInProgress */
 
 
 function updateMap(){
@@ -11,28 +12,45 @@ function updateMap(){
     if(pathfindingStatus === status.ACTIVE){
         visualizeGrid();
         
-        if(algorithmInProgress === 'Traversal'){
+        if(algorithmInProgress === 'Traversal')
             color.forEach(visualizeTraversalAlgo);
-        }else if(algorithmInProgress === 'Shortest'){
+        else if(algorithmInProgress === 'Shortest')
             visualizeShortestPathAlgo();
-        }
     }else if(pathfindingStatus === status.SUCCESS){
-        console.log("The shortest path distance is " + target.g);
-        
+        // Show path
         visualizePath(target);
         
-        document.getElementById('PauseButton').disabled = true;
+        // Change HTML
+        document.getElementById('startAndPauseButton').disabled = true;
         document.getElementById('StopButton').disabled = true;
+        
+        if(target.g === 1)
+            document.getElementById('resultText').innerHTML =
+                "The resulting path is just <b>1 step</b> long!";
+        else if(algorithmInProgress === 'Traversal'){
+            document.getElementById('resultText').innerHTML =
+                "The resulting path is <b>" + target.g + " steps</b> long!<br>\n\
+                Attention! You chose a traversal algorithm, so it is\n\
+                not guaranteed the shortest path!";
+        }else{
+            document.getElementById('resultText').innerHTML =
+                "The resulting path is <b>" + target.g + " steps</b> long!";
+        }
+            
+        
+        
+        // Change app status
         pathfindingStatus = status.DEACTIVE;
     }else if(pathfindingStatus === status.FAILURE){
-        console.log("There is not exist a path, I gotta show something!");
-        
-        document.getElementById('PauseButton').disabled = true;
+        // Change HTML
+        document.getElementById('startAndPauseButton').disabled = true;
         document.getElementById('StopButton').disabled = true;
+        document.getElementById('resultText').innerHTML =
+                "There is not exist any path from source to target!";
+        // Change app status
         pathfindingStatus = status.DEACTIVE;
-    }else{
+    }else
         visualizeGrid();
-    }
     
     source.show(colorEnum.SOURCE);
     target.show(colorEnum.TARGET);

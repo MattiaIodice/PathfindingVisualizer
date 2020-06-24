@@ -18,7 +18,8 @@
         
         <!-- Processing -->
         <script src="p5/p5.js"></script>
-        <script src="p5/p5.sound.js"></script>
+        <!--<script src="p5/p5.sound.js"></script>-->
+        
         
         <!-- Personal CSS -->
         <link rel="stylesheet" href="css/main.css">
@@ -30,15 +31,13 @@
         <!-- entities -->
         <script src="js/entities/node.js"></script>
         <!-- events -->
-        <script src="js/events/resetAlgo.js"></script>
-        <script src="js/events/setAlgorithm.js"></script>
-        <script src="js/events/setMaze.js"></script>
-        <script src="js/events/setTypeCell.js"></script>
-        <script src="js/events/setVelocity.js"></script>
-        <script src="js/events/updateVelocity.js"></script>
-        <script src="js/events/startAndPauseButtonEvent.js"></script>
-        <script src="js/events/stopButtonEvent.js"></script>
-        <script src="js/events/resetButtonEvent.js"></script>
+        <script src="js/events/dropdowns/setAlgorithm.js"></script>
+        <script src="js/events/dropdowns/setMaze.js"></script>
+        <script src="js/events/dropdowns/setTypeCell.js"></script>
+        <script src="js/events/dropdowns/setVelocity.js"></script>
+        <script src="js/events/buttons/startAndPauseButtonEvent.js"></script>
+        <script src="js/events/buttons/stopButtonEvent.js"></script>
+        <script src="js/events/buttons/resetButtonEvent.js"></script>
         <!-- mazes -->
         <script src="js/mazes/helloMaze.js"></script>
         <script src="js/mazes/randomMaze.js"></script>
@@ -50,8 +49,9 @@
         <script src="js/pathfindings/prim.js"></script>
         <!-- utils -->
         <script src="js/utils/removeFromArray.js"></script>
-        <script src="js/utils/queue.js"></script>
-        <script src="js/utils/stack.js"></script>
+        <script src="js/utils/resetAlgo.js"></script>
+        <script src="js/utils/priorityQueue.js"></script>
+        <script src="js/utils/disableMapForNavbar.js"></script>
         <!-- visualizers -->
         <script src="js/visualizers/visualizeMap.js"></script>
         <script src="js/visualizers/visualizePath.js"></script>
@@ -73,7 +73,7 @@
 
                 <!-- Maze Dropdown -->
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown" onclick="disableMap()">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown" onclick="disableMapForNavbar()">
                         Maze
                     </a>
                     <div class="dropdown-menu">
@@ -86,12 +86,12 @@
                 
                 <!-- Custom Cell Dropdown -->
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown" onclick="disableMap()">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown" onclick="disableMapForNavbar()">
                         Cell
                     </a>
                     <div class="dropdown-menu">
                         <a onclick="setTypeCell('Wall')" class="dropdown-item" href="#">Wall</a>
-                        <a onclick="setTypeCell('TallGrass')" class="dropdown-item" href="#">Tall Grass</a>
+                        <a onclick="setTypeCell('TallGrass')" class="dropdown-item" href="#">Tall grass</a>
                         <a onclick="setTypeCell('Mug')" class="dropdown-item" href="#">Mug</a>
                         <a onclick="setTypeCell('Water')" class="dropdown-item" href="#">Water</a>
                     </div>
@@ -99,7 +99,7 @@
                 
                 <!-- Algorithm Dropdown -->
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown" onclick="disableMap()">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown" onclick="disableMapForNavbar()">
                         Algorithm
                     </a>
                     <div class="dropdown-menu">
@@ -114,7 +114,7 @@
                 
                 <!-- Speed Dropdown -->
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown" onclick="disableMap()">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown" onclick="disableMapForNavbar()">
                         Speed
                     </a>
                     <div class="dropdown-menu">
@@ -128,7 +128,7 @@
             
             <button onclick="startAndPauseButtonEvent()"
                 class="btn btn-primary navbar-btn fa fa-pause"
-                id="PauseButton" disabled>
+                id="startAndPauseButton" disabled>
             </button>
 
             <button onclick="stopButtonEvent()"
@@ -176,11 +176,11 @@
                             <div class="row">
                                 <!-- Row of cell modifiers -->
                                 <div class="col-sm-1"><div style="width:20px;height:20px;background-color: rgb(0, 135, 0);margin-top: 3px"></div></div>
-                                <div class="col-sm-3">Tall grass</div>
+                                <div class="col-sm-3">Tall grass (+1)</div>
                                 <div class="col-sm-1"><div style="width:20px;height:20px;background-color: rgb(173, 81, 0);margin-top: 3px"></div></div>
-                                <div class="col-sm-3">Mug</div>
+                                <div class="col-sm-3">Mug (+2)</div>
                                 <div class="col-sm-1"><div style="width:20px;height:20px;background-color: rgb(0, 135, 131);margin-top: 3px"></div></div>
-                                <div class="col-sm-3">Water</div>
+                                <div class="col-sm-3">Water (+3)</div>
                             </div>
 
                             <br>
@@ -189,15 +189,15 @@
                                 <!-- Column of Information -->
                                 <div class="col">
                                     <h1 class="display-4">Info</h1>
-                                    <div>Left-click cell: <p id="currentWall">Wall</p></div>
-                                    <div>Selected algorithm: <p id="currentAlgorithm"><b>None</b></p></div>
+                                    <!--<div>Left-click cell: <p id="currentWall">Wall</p></div>-->
+                                    <div>Last selected algorithm: <p id="currentAlgorithm"><b>None</b></p></div>
                                     <div>Selected speed: <p id="currentSpeed"><b>Normal</b></p></div>
                                 </div>
 
                                 <!-- Column of Results -->
                                 <div class="col">
-                                    <h1 class="display-4">Results</h1>
-                                    <div id="resultText">None</div>
+                                    <h1 class="display-4">Result</h1>
+                                    <div id="resultText">Run a pathfinding algorithm and see here result</div>
                                 </div>
                             </div>
                         </div>

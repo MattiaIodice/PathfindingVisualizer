@@ -181,6 +181,7 @@ function draw() {
 }
 
 
+
 navbarFlag = false;
 /** =================================================================
  *  ================ p5JS function - Left click mouse ===============
@@ -271,27 +272,5 @@ function mouseDragged() {
             mapChanged = true;
         }
     }
-}
-
-function startAndPauseButtonEvent(){
-    let element = document.getElementById("startAndPause");
-    if(pathfindingStatus === status.ACTIVE){
-        element.className = "btn btn-primary navbar-btn fa fa-play";
-        pathfindingStatus = status.PAUSE;
-    }else{
-        element.className = "btn btn-primary navbar-btn fa fa-pause";
-        pathfindingStatus = status.ACTIVE;
-    }
-}
-
-function stopButtonEvent(){
-    pathfindingStatus = status.DEACTIVE;
-    resetAlgo();
-}
-
-
-function disableMap(){
-    console.log('Unable navbar');
-    navbarFlag = true;
 }
 
