@@ -38,6 +38,7 @@
         <script src="js/events/buttons/startAndPauseButtonEvent.js"></script>
         <script src="js/events/buttons/stopButtonEvent.js"></script>
         <script src="js/events/buttons/resetButtonEvent.js"></script>
+        <script src="js/events/buttons/tutorialEvent.js"></script>
         <!-- mazes -->
         <script src="js/mazes/helloMaze.js"></script>
         <script src="js/mazes/randomMaze.js"></script>
@@ -139,8 +140,26 @@
             <button onclick="resetButtonEvent()"
                 class="btn btn-primary navbar-btn fa fa-trash">
             </button>
-        
+            
+            <button onclick="openTutorial()"
+                    class="btn btn-primary navbar-btn fa fa-question-circle">
+            </button>
+            
         </nav>
+        
+        <!-- The Modal -->
+        <div id="myModal" class="modal">
+            <!-- Modal content -->
+            <div class="modal-content">
+                <!-- <span class="close" onclick="closeTutorial()">&times;</span> -->
+                <h1>Welcome to Pathfinding Visualizer!</h1>
+                <p>1) Select a <b>Map</b> from <i>Maze Section</i> (on the navbar), or create a <i>custom</i> one, clicking on the map.</p>
+                <p>2) Select an <b>Algorithm</b> from <i>Algorithm Section</i> (on the navbar).</p>
+                <p>Visualize the running and the resulting path.</p>
+                <p>Enjoy it!</p>
+                <p>Mattia Iodice.</p>
+            </div>
+        </div>
         
         <div class="jumbotron">
             <div class="container mt-3">
@@ -210,11 +229,11 @@
         <footer class="footer">
 
           <div>© 2020 Author:
-            <a href="https://www.mattiaiodice.com/"> Mattia Iodice</a>
+            <a href="https://www.mattiaiodice.com/">Mattia Iodice</a>
           </div>
           
           <div>Code:
-            <a href="https://mdbootstrap.com/"> GitHub</a>
+            <a href="https://mdbootstrap.com/">GitHub</a>
           </div>
 
         </footer>
